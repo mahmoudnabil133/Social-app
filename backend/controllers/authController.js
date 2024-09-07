@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const crypto = require('crypto')
-const sendEmail = require('./sendEmail');
+const sendEmail = require('../utils/sendEmail');
 const { promisify } = require('util');
 const env = require('dotenv').config();
 
@@ -78,7 +78,8 @@ exports.logout = async(req, res)=>{
 
 exports.protect = async(req, res, next)=>{
     try{
-        console.log('protected route')
+        console.log('protected route');
+        console.log(req.cookies)
         let token;
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             token = req.headers.authorization.split(' ')[1];
@@ -87,6 +88,7 @@ exports.protect = async(req, res, next)=>{
             token = req.cookies.jwt;
             console.log('got token from cookies')
         }
+        console.log(token)
         if (!token) throw new Error('you are not logged in please login');
         // what is pomisify to get decoded ?
         let decoded;;
