@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "validator": "^13.12.0"
+  }
+}
