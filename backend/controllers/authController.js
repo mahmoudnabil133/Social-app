@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res)=>{
 };
 
 
-const signUp = async(req, res)=>{
+exports.signUp = async(req, res)=>{
     try{
         console.log(req.body)
         const newUser = {}
@@ -45,7 +45,7 @@ const signUp = async(req, res)=>{
     }
 };
 
-const login = async(req, res)=>{
+exports.login = async(req, res)=>{
     try{
         const {email, password} = req.body;
         const user = await User.findOne({email: email}).select('+password');
@@ -62,7 +62,7 @@ const login = async(req, res)=>{
     }
 };
 
-const logout = async(req, res)=>{
+exports.logout = async(req, res)=>{
     // remove cookies from browser.
     console.log('logout')
     res.cookie('jwt', 'loogedout',{
@@ -76,7 +76,7 @@ const logout = async(req, res)=>{
 
 };
 
-const protect = async(req, res, next)=>{
+exports.protect = async(req, res, next)=>{
     try{
         console.log('protected route')
         let token;
@@ -113,7 +113,7 @@ const protect = async(req, res, next)=>{
     }
 };
 
-const isAuth = async(req, res)=>{
+exports.isAuth = async(req, res)=>{
     try{
         const token = req.body.token;
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
@@ -133,7 +133,7 @@ const isAuth = async(req, res)=>{
     }
 };
 
-const restrictTo = (...roles) => {
+exports.restrictTo = (...roles) => {
     return (req, res, next)=>{
         try {
             if (!roles.includes(req.user.role)) throw new Error('you are not allowed to access this route');
@@ -147,7 +147,7 @@ const restrictTo = (...roles) => {
     }
 };
 
-const forgotPassword = async(req, res)=>{
+exports.forgotPassword = async(req, res)=>{
     try{
         const { email } = req.body;
         const user = await User.findOne({email: email})
@@ -182,7 +182,7 @@ const forgotPassword = async(req, res)=>{
 };
 
 
-const resetPassword = async(req, res) =>{
+exports.resetPassword = async(req, res) =>{
     try{
         const { token } = req.params
         const encryptedToken = crypto.createHash("sha256").update(token).digest('hex');
@@ -202,7 +202,7 @@ const resetPassword = async(req, res) =>{
     }
 };
 
-const updatePassword = async(req, res)=>{
+exports.updatePassword = async(req, res)=>{
     try{
         const user = await User.findById(req.user.id).select('+password')
         if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
@@ -220,15 +220,3 @@ const updatePassword = async(req, res)=>{
         })
     }
 }
-
-module.exports = {
-    signUp,
-    login,
-    logout,
-    protect,
-    isAuth,
-    restrictTo,
-    forgotPassword,
-    resetPassword,
-    updatePassword
-};
