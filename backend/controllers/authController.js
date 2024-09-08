@@ -78,7 +78,6 @@ exports.logout = async(req, res)=>{
 
 exports.protect = async(req, res, next)=>{
     try{
-        console.log('protected route');
         console.log(req.cookies)
         let token;
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
