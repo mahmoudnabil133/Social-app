@@ -48,7 +48,7 @@ exports.createPostLike = async(req, res)=>{
         });
         const like = await Like.create({type, post: postId, user: userId});
         post.likes.push(like._id);
-        res.status.json({
+        res.status(201).json({
             success: true,
             msg: 'like created',
             data: like
