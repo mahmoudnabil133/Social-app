@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 // const post = require('./post');
 const likeSchema = new mongoose.Schema({
     type:{
-        enum: ['like', 'dislike', 'love', 'haha'],
-        default: 'like'
+        enum: ['like', 'dislike', 'love', 'haha']
     },
     post: {
         type: mongoose.Schema.Types.ObjectId,
