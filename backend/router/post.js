@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const postController = require('../controllers/postController');
 const commentRouter = require('./comment');
+const likeRouter = require('./like');
 
 router.use(authController.protect);
 router.route('/')
@@ -15,4 +16,5 @@ router.route('/:id')
     .delete(postController.deletePost);
 
 router.use('/:postId/comments', commentRouter);
+router.use('/:postId/likes', likeRouter);
 module.exports = router;
