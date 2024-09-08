@@ -1,11 +1,8 @@
 const Post = require('../models/post');
-const User = require('../models/user');
-const Comment = require('../models/comment');
-
 
 exports.getPosts = async (req, res) =>{
     try{
-        const posts = await Post.find().populate('postedBy').populate('comments').populate('likes');
+        const posts = await Post.find();
         if (!posts) throw new Error('No posts found');
         res.status(200).json({
             success: true,
@@ -25,11 +22,19 @@ exports.getPosts = async (req, res) =>{
 exports.getOnePost = async (req, res) =>{
     try{
         const { id } = req.params;
-        const post = await Post.findById(id).populate('postedBy').populate('comments').populate('likes');
+        let post = await Post.findById(id);
         if (!post) throw new Error('post not found');
+        const postQuery = Post.findById(id);
+        if (post.comments.length > 0) {
+            postQuery.populate('comments');
+        };
+        if (post.likes.length > 0) {
+            postQuery.populate('likes');
+        };
+        post = await postQuery;
         res.status(200).json({
             success: true,
-            msg: 'post found',
+            msg: 'posttt found',
             data: post
         });
 
@@ -63,6 +68,7 @@ exports.updatePost = async(req, res)=>{
     try{
         const {id} = req.params;
         const post = await Post.findById(id);
+        console.log(post.postedBy.toString(), req.user.id);
         if (!post) throw new Error('post not found');
         if (post.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
         const updatedPost = await Post.findByIdAndUpdate(id, req.body,
