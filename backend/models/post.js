@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const postSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -13,7 +13,6 @@ const postSchema = new mongoose.Schema({
     photo: {
         data: Buffer,
         contentType: String,
-        default: ''
     },
     postedBy:{
         type: mongoose.Schema.Types.ObjectId,
@@ -33,4 +32,4 @@ const postSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', PostSchema);
