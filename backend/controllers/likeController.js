@@ -48,6 +48,7 @@ exports.createPostLike = async(req, res)=>{
         });
         const like = await Like.create({type, post: postId, user: userId});
         post.likes.push(like._id);
+        await post.save();
         res.status(201).json({
             success: true,
             msg: 'like created',
@@ -67,17 +68,16 @@ exports.updatePostLike = async(req, res)=>{
         const {type} = req.body;
         if (!type) throw new Error('type is required');
         const userId = req.user.id;
-        let like = await Like.findById(id);
+        const like = await Like.findById(id);
         if (!like) throw new Error('like not found');
         if (like.user.toString() !== userId) {
             throw new Error('you are not authorized to update this like');
         }
-        like.type = type;
-        await like.save();
+        const updatedLike = await Like.findByIdAndUpdate(id, {type}, {new: true});
         res.status(200).json({
             success: true,
             msg: 'like updated',
-            data: like
+            data: updatedLike
         });
     }catch(err){
         res.status(400).json({
@@ -95,7 +95,11 @@ exports.deletePostLike = async(req, res)=>{
         if (like.user.toString() !== userId) {
             throw new Error('you are not authorized to delete this like');
         }
-        await like.remove();
+        const post = await Post.findById(like.post);
+        const likeIndex = post.likes.indexOf(id);
+        post.likes.splice(likeIndex, 1);
+        await post.save();
+        await Like.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
             msg: 'like deleted',
