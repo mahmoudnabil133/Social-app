@@ -5,8 +5,9 @@ import React from 'react'
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Profile from './pages/profile';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectRoutes from './components/protectRoutes';
-import Post from './components/post';
+import Post from './pages/posts';
 function App() {
   return (
     <Router>
