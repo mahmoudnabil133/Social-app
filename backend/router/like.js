@@ -11,5 +11,6 @@ router.route('/:id')
     .get(likeController.getPostLike)
     .patch(likeController.updatePostLike)
     .delete(likeController.deletePostLike);
-
+router.route('/my-like/:postId')
+    .get(likeController.getpostUserLike);
 module.exports = router;

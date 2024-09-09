@@ -30,12 +30,34 @@ exports.getPostLike = async(req, res)=>{
             data: like
         });
     }catch(err){
+        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
         })
     }
 };
+exports.getpostUserLike = async(req, res)=>{
+    try{
+        console.log('sdsdsdsdsdsaaaaaaaaaaaaaa');
+        const {postId} = req.params;
+        const userId = req.user.id;
+        const like = await Like.findOne({post: postId, user: userId});
+        if (!like) throw new Error('like not found');
+        console.log(like);
+        res.status(200).json({
+            success: true,
+            msg: 'like found',
+            data: like
+        });
+    }catch(err){
+        console.log(err.message);
+        res.status(500).json({
+            success: false,
+            msg: err.message
+        })
+    }
+}
 exports.createPostLike = async(req, res)=>{
     try{
         const {postId} = req.params;
@@ -55,6 +77,7 @@ exports.createPostLike = async(req, res)=>{
             data: like
         });
     }catch(err){
+        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
@@ -80,6 +103,7 @@ exports.updatePostLike = async(req, res)=>{
             data: updatedLike
         });
     }catch(err){
+        console.log(err.message);
         res.status(400).json({
             success: false,
             msg: err.message
@@ -105,6 +129,7 @@ exports.deletePostLike = async(req, res)=>{
             msg: 'like deleted',
         });
     }catch(err){
+        console.log(err.message);
         res.status(400).json({
             success: false,
             msg: err.message
