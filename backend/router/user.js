@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const friendController = require('../controllers/friendsController');
 
 router.route('/signup')
     .post(authController.signUp);
@@ -22,6 +23,14 @@ router.route('/me')
     .delete(userController.deleteUser);
 router.route('/updateMyPassword')
     .patch(authController.updatePassword);
+
+
+router.route('/friend-requist/:id')
+    .post(friendController.requistFriend);
+router.route('/accept-friend-requist/:id')
+    .post(friendController.acceptRequist);
+router.route('/decline-friend-requist/:id')
+    .post(friendController.declineRequest);
 
 router.use(authController.restrictTo('admin'));
 router.route('/')
