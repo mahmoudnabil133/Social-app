@@ -39,6 +39,25 @@ exports.getOneComment = async(req, res)=>{
             msg: err.message
         })
     }
+};
+exports.getMyComments = async(req, res)=>{
+    try{
+        const {postId} = req.params;
+        const userId = req.user.id;
+        const comments = await Comment.find({post: postId, postedBy: userId});
+        if (!comments.length) throw new Error('No comments found');
+        res.status(200).json({
+            success: true,
+            msg: 'comments found',
+            length: comments.length,
+            data: comments
+        });
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            msg: err.message
+        })
+    }
 }
 exports.createComment = async(req, res)=>{
     try{

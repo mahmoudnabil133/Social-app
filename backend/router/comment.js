@@ -10,5 +10,6 @@ router.route('/:id')
     .get(commentController.getOneComment)
     .patch(commentController.updateComment)
     .delete(commentController.deleteComment);
-
+router.route('/my-comments/:postId')
+    .get(commentController.getMyComments);
 module.exports = router;
