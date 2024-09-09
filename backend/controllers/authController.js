@@ -103,7 +103,7 @@ exports.protect = async(req, res, next)=>{
             throw new Error('token didnt changed after updating password please login again')
         }
         // allow access to user
-        req.user = user
+        req.user = user;
         next()
 
     }catch(err){
