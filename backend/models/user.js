@@ -49,7 +49,7 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
     }],
-    freindRequists:[{
+    friendRequists:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }]

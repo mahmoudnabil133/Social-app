@@ -10,8 +10,9 @@ exports.requistFriend = async(req, res)=>{
         if (!requistedUser) throw new Error('User not found');
         if (currentUser.id === id) throw new Error('you cannet add yourself');
         if (currentUser.friends.includes(requistedUser._id)) throw new Error('you are already freinds');
-        requistedUser.freindRequists.push(currentUser._id);
-        await requistedUser.save();
+        if (requistedUser.friendRequists.includes(currentUser._id)) throw new Error('request already sent');
+        requistedUser.friendRequists.push(currentUser._id);
+        await requistedUser.save({validateBeforeSave: false});
         res.status(200).json({
             status: 'success',
             message: 'request sent'
@@ -19,7 +20,7 @@ exports.requistFriend = async(req, res)=>{
     }catch(err){
         res.status(400).json({
             status: 'fail',
-            message: err
+            message: err.message
         });
     }
 };
@@ -33,10 +34,10 @@ exports.acceptRequist = async(req, res)=>{
         if (!currentUser.friendRequists.includes(requistingUser._id)) throw new Error('no requists from this user');
         currentUser.friends.push(requistingUser._id);
         requistingUser.friends.push(currentUser._id);
-        curUserIndex = currentUser.freindRequests.indexOf(requistingUser._id);
+        curUserIndex = currentUser.friendRequists.indexOf(requistingUser._id);
         currentUser.friendRequists.splice(currentUser, 1);
-        await currentUser.save();
-        await requistingUser.save();
+        await currentUser.save({validateBeforeSave: false});
+        await requistingUser.save({validateBeforeSave: false});
         res.status(200).json({
             status: 'success',
             message: 'request accepted'
@@ -45,7 +46,7 @@ exports.acceptRequist = async(req, res)=>{
     }catch(err){
         res.status(400).json({
             status: 'fail',
-            message: err
+            message: err.message
         });
     }
 };
@@ -57,9 +58,9 @@ exports.declineRequest = async(req, res)=>{
         const requistingUser = await User.findById(id);
         if (!requistingUser) throw new Error('User not found');
         if (!currentUser.friendRequists.includes(requistingUser._id)) throw new Error('no requists from this user');
-        curUserIndex = currentUser.freindRequests.indexOf(requistingUser._id);
+        curUserIndex = currentUser.friendRequists.indexOf(requistingUser._id);
         currentUser.friendRequists.splice(currentUser, 1);
-        await currentUser.save();
+        await currentUser.save({validateBeforeSave: false});
         res.status(200).json({
             status: 'success',
             message: 'request declined'
@@ -67,7 +68,7 @@ exports.declineRequest = async(req, res)=>{
     }catch(err){
         res.status(400).json({
             status: 'fail',
-            message: err
+            message: err.message
         });
     }
 };
