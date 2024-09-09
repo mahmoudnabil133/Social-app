@@ -44,7 +44,15 @@ const UserSchema = new mongoose.Schema({
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
-    passwordResetExpires: Date
+    passwordResetExpires: Date,
+    friends:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }],
+    requistedFriends:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 UserSchema.pre('save', async function(next){
