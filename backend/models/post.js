@@ -32,4 +32,9 @@ const PostSchema = new mongoose.Schema({
     }
 });
 
+PostSchema.pre(/^find/, function(next){
+    this.populate('comments').populate('likes');
+    next();
+})
+
 module.exports = mongoose.model('Post', PostSchema);

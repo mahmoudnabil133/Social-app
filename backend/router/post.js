@@ -10,6 +10,9 @@ router.route('/')
     .get(authController.restrictTo('admin'),postController.getPosts)
     .post(postController.createPost);
 
+router.route('/my-posts')
+    .get(postController.getMyPosts);
+
 router.route('/:id')
     .get(postController.getOnePost)
     .patch(postController.updatePost)

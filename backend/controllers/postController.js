@@ -18,6 +18,23 @@ exports.getPosts = async (req, res) =>{
         })
     }
 };
+exports.getMyPosts = async(req, res)=>{
+    try{
+        const posts = await Post.find({postedBy: req.user.id});
+        res.status(200).json({
+            success: true,
+            msg: 'posts found',
+            length: posts.length,
+            data: posts
+        });
+
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            msg: err.message
+        })
+    }
+}
 
 exports.getOnePost = async (req, res) =>{
     try{
