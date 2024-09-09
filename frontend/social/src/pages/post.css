@@ -1,0 +1,120 @@
+/* General Container */
+.post-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+  }
+  
+  /* Post Card Styling */
+  .post-card {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 15px;
+  }
+  
+  /* Post Date Styling */
+  .post-date {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Post Title Styling */
+  .post-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  /* Post Body Styling */
+  .post-body {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  /* Likes Section */
+  .likes {
+    font-size: 0.9rem;
+    color: #6c757d;
+    padding-left: 15px;
+  }
+  
+  /* Comment Button Styling */
+  .comment-button {
+    margin: 10px 15px;
+    width: 90%;
+    font-size: 0.9rem;
+    padding: 8px 0;
+    border-radius: 20px;
+  }
+  
+  /* Comments Section */
+  .comments-section {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 10px 15px;
+  }
+  
+  /* Comment Header */
+  .comment-header {
+    font-weight: 500;
+    color: #343a40;
+  }
+  
+  /* Individual Comment Item */
+  .comment-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Comment Text */
+  .comment-text {
+    font-size: 1rem;
+    color: #495057;
+  }
+  
+  /* Comment Date */
+  .comment-date {
+    font-size: 0.85rem;
+    color: #adb5bd;
+    margin-top: 5px;
+    text-align: right;
+  }
+  
+  /* No Comments Available */
+  .no-comments {
+    font-size: 0.9rem;
+    color: #6c757d;
+    padding: 10px;
+    text-align: center;
+  }
+  .reaction-button {
+    width: 90%;
+    margin: 10px 15px;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-radius: 20px;
+  }
+  
+  /* Add hover effect for dropdown */
+  .reaction-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Dropdown menu customization */
+  .dropdown-menu {
+    min-width: 150px;
+  }
+  
+  
