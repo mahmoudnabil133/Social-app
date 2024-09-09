@@ -6,6 +6,7 @@ import Login from './pages/login';
 import SignUp from './pages/signup';
 import Profile from './pages/profile';
 import ProtectRoutes from './components/protectRoutes';
+import Post from './components/post';
 function App() {
   return (
     <Router>
@@ -17,6 +18,11 @@ function App() {
           <Route path='/profile' element={
             <ProtectRoutes>
               < Profile/>
+            </ProtectRoutes>
+            } />
+          <Route path='/posts' element={
+            <ProtectRoutes>
+              < Post/>
             </ProtectRoutes>
             } />
           <Route path='*' element={<h1>Not Found</h1>} />
