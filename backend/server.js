@@ -9,9 +9,11 @@ const userRouter = require('./router/user');
 const PostRouter = require('./router/post');
 const commentRouter = require('./router/comment');
 const likeRouter = require('./router/like');
+const path = require('path');
 const app = express();
 
 // middle ware
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());

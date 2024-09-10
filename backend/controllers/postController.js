@@ -65,9 +65,11 @@ exports.getOnePost = async (req, res) =>{
 
 exports.createPost = async(req, res)=>{
     try{
+        console.log(req.file);
         const {title, body} = req.body;
         const postedBy = req.user.id;
-        const post = await Post.create({title, body, postedBy});
+        const photoUrl = req.file ? `uploads/${req.file.filename}` : '';
+        const post = await Post.create({title, body, postedBy, photoUrl});
         res.status(200).json({
             success: true,
             msg: 'post created',
