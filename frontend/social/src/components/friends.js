@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './chat.css'; // Assuming you'll use a separate CSS file for styling
@@ -12,14 +11,11 @@ const socket = io.connect('http://localhost:3001', {
 
 const Chat = () => {
     const token = localStorage.getItem('token');
-    // const navigate = useNavigate();
     const [friends, setFriends] = useState([]); // Friends list
     const [myAccount, setMyAccount] = useState({}); // User details
     const [message, setMessage] = useState(''); // Message input
     const [messages, setMessages] = useState([]); // Array of messages (sent/received)
     const [selectedFriend, setSelectedFriend] = useState(null); // Selected friend for chat
-    // const [recievedMessage, setRecievedMessage] = useState(''); // Received message data
-    // const [messageSender, setMessageSender] = useState(''); // Sender of received message
 
     // Fetch user account info and friends
     const getMyAccount = async () => {
@@ -31,6 +27,22 @@ const Chat = () => {
             });
             setMyAccount(response.data.data);
             setFriends(response.data.data.friends); // Assuming friends is an array of users
+            console.log(myAccount._id);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // Fetch chat history with the selected friend
+    const getChat = async (friendId) => {
+        try {
+            const response = await axios.get(`http://localhost:3001/chat/${friendId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setMessages(response.data.data); // Assuming response contains the array of messages
+            console.log(response.data.data);
         } catch (err) {
             console.log(err);
         }
@@ -47,31 +59,39 @@ const Chat = () => {
             // Add the sent message to the local message array
             setMessages(prevMessages => [
                 ...prevMessages,
-                { message: message, sender: myAccount.userName, type: 'sent' }
+                { message: message, from: myAccount.userName, type: 'sent' }
             ]);
             setMessage(''); // Clear input after sending
         }
     };
 
+    // Listen for incoming messages
     useEffect(() => {
+        if (selectedFriend) {
+            getChat(selectedFriend._id);
+        }
         getMyAccount(); // Fetch user account info and friends
+
         const recieveMessage = (data) => {
             setMessages(prevMessages => [
                 ...prevMessages,
-                { message: data.message, sender: data.from, type: 'received' }
+                { message: data.message, from: data.from, type: 'received' }
             ]);
-            // setMessageSender(data.from); // Set the sender's name
         };
-    
-        // Register the socket event listener once
+
+        // Register the socket event listener
         socket.on('recieve-message', recieveMessage);
-    
-        // Cleanup listener on unmount or before re-running useEffect
+
+        // Cleanup listener on unmount
         return () => {
             socket.off('recieve-message', recieveMessage);
         };
-    }, []);
-    
+    }, [selectedFriend]);
+
+    // Fetch chat when a friend is selected
+    // useEffect(() => {
+
+    // }, [selectedFriend]);
 
     return (
         <div className="chat-container">
@@ -100,7 +120,7 @@ const Chat = () => {
                             {messages.map((msg, index) => (
                                 <div 
                                     key={index}
-                                    className={`message ${msg.type === 'sent' ? 'sent' : 'received'}`}
+                                    className={`message ${msg.from === myAccount._id ? 'sent' : 'received'}`}
                                 >
                                     {msg.message}
                                 </div>
