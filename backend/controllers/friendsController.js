@@ -72,3 +72,39 @@ exports.declineRequest = async(req, res)=>{
         });
     }
 };
+
+exports.getRecommendedFriends = async (req, res) => {
+    try {
+      const currentUserId = req.user.id;
+  
+      // Find the current user and populate friends and friend requests
+      const user = await User.findById(currentUserId)
+  
+      // Get only the friends' and friend requests' IDs
+      const friendIds = user.friends
+      const requestIds = user.friendRequists
+  
+      // Find all users
+      const allUsers = await User.find();
+  
+      // Filter users: exclude friends, friend requests, and the current user
+      const recommendedFriends = allUsers.filter(u => 
+        !friendIds.includes(u._id) && 
+        !requestIds.includes(u._id) && 
+        u.id !== currentUserId
+      );
+      
+      // Return recommended friends
+      res.status(200).json({
+        status: 'success',
+        data: recommendedFriends
+      });
+      
+    } catch (err) {
+      res.status(400).json({
+        status: 'fail',
+        message: err.message
+      });
+    }
+  };
+  
