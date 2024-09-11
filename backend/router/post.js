@@ -18,7 +18,7 @@ const upload = multer({storage: storage});
 
 router.use(authController.protect);
 router.route('/')
-    .get(authController.restrictTo('admin'),postController.getPosts)
+    .get(postController.getPosts)
     .post(upload.single('photo'), postController.createPost);
 
 router.route('/my-posts')

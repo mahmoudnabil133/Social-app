@@ -31,8 +31,10 @@ router.route('/accept-friend-requist/:id')
     .post(friendController.acceptRequist);
 router.route('/decline-friend-requist/:id')
     .post(friendController.declineRequest);
+router.route('/recommended-friends')
+    .get(friendController.getRecommendedFriends);
 
-router.use(authController.restrictTo('admin'));
+// router.use(authController.restrictTo('admin'));
 router.route('/')
     .get(userController.getAllUsers)
 
