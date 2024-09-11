@@ -8,6 +8,8 @@ import Profile from './pages/profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectRoutes from './components/protectRoutes';
 import Post from './pages/posts';
+import Chat from './components/friends';
+
 function App() {
   return (
     <Router>
@@ -26,6 +28,7 @@ function App() {
               < Post/>
             </ProtectRoutes>
             } />
+            <Route path='/chat' element={<Chat/>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </div>
