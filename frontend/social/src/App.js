@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectRoutes from './components/protectRoutes';
 import Post from './pages/posts';
 import Chat from './components/friends';
+import Requests from './components/friendRequists';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             </ProtectRoutes>
             } />
             <Route path='/chat' element={<Chat/>} />
+            <Route path='/requests' element={<Requests/>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </div>

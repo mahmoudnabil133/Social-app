@@ -23,6 +23,7 @@ const Post = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPosts(response.data.data); // Set posts data
+      console.log(response.data.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }

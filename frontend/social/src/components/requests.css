@@ -1,0 +1,82 @@
+.requests-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-left: 25%;
+    border-right: 25%;
+  }
+  
+  .friend-requests, .recommended-friends {
+    margin: 20px 0;
+  }
+  
+  .request-card, .recommended-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .accept-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .decline-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .add-friend-btn {
+    background-color: #008cba;
+    color: white;
+  }
+  .add-friend-btn {
+    background-color: #008cba; /* Default blue */
+    color: white;
+    cursor: pointer;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .add-friend-btn.clicked {
+    background-color: #4caf50; /* Green after click */
+    color: white;
+  }
+  
+  .accept-btn, .decline-btn {
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .accept-btn {
+    background-color: #28a745; /* Green for accept */
+    color: white;
+  }
+  
+  .decline-btn {
+    background-color: #dc3545; /* Red for decline */
+    color: white;
+  }
+  
+  .recommended-card, .request-card {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
