@@ -1,0 +1,50 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/auth/(.*)",
+        "dest": "/controllers/authController.js"
+      },
+      {
+        "src": "/api/comments/(.*)",
+        "dest": "/controllers/commentController.js"
+      },
+      {
+        "src": "/api/friends/(.*)",
+        "dest": "/controllers/friendsController.js"
+      },
+      {
+        "src": "/api/likes/(.*)",
+        "dest": "/controllers/likeController.js"
+      },
+      {
+        "src": "/api/messages/(.*)",
+        "dest": "/controllers/messageController.js"
+      },
+      {
+        "src": "/api/posts/(.*)",
+        "dest": "/controllers/postController.js"
+      },
+      {
+        "src": "/api/users/(.*)",
+        "dest": "/controllers/userController.js"
+      }
+    ],
+    "env": {
+        "PORT":3001,
+        "MONGO_URI":"mongodb+srv://hoda:1234@cluster0.bp3s9ei.mongodb.net/Social_app?retryWrites=true&w=majority&appName=Cluster0",
+        "JWT_SECRET":"3MOD4OD123321",
+        "JWT_EXPIRES":"90d",
+        "JWT_COOKIE_EXPIRES":"90",
+        "EMAIL_HOST":"sandbox.smtp.mailtrap.io",
+        "EMAIL_PORT":"25",
+        "EMAIL_USERNAME":"69ae53cebd229e",
+        "EMAIL_PASSWORD":"6902ec65208b9a"
+    }
+}
