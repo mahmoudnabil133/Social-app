@@ -9,6 +9,9 @@ const userRouter = require('./router/user');
 const PostRouter = require('./router/post');
 const commentRouter = require('./router/comment');
 const likeRouter = require('./router/like');
+const messageRouter = require('./router/messageRouter');
+const socketRouter = require('./router/socketRouter');
+const socketMiddleware = require('./middlewares/socket');
 const path = require('path');
 const app = express();
 const {Server} = require('socket.io');
@@ -23,33 +26,10 @@ const io = new Server(server, {
 });
 
 app.use(cors());
-io.use((socket, next)=>{
-    console.log('asasasassasas');
-    const token = socket.handshake.auth.token;
-    if (token){
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
-            if(err){
-                next(new Error('authentication error'));
-            } socket.userId = decoded.id;
-            next();
-        })
-    }else{
-        next(new Error('token not found'));
-    }  
-});
 
-io.on('connection', (socket)=>{
-    console.log('user connected with id', socket.userId);
-    socket.join(socket.userId);
+socketMiddleware(io);
+socketRouter(io);
 
-    socket.on('send-message', (data)=>{
-        const {recievedId, message, from} = data;
-        socket.to(recievedId).emit('recieve-message', {message, from});
-    })
-    socket.on('disconnect', ()=>{
-        console.log('user disconnected');
-    })
-})
 // middle ware
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -60,6 +40,7 @@ app.use('/users', userRouter);
 app.use('/posts', PostRouter);
 app.use('/comments', commentRouter);
 app.use('/likes', likeRouter);
+app.use('/chat', messageRouter);
 
 
 
