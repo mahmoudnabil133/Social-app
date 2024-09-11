@@ -27,7 +27,7 @@ exports.getAllUsers = async (req, res)=>{
 exports.getOneUser = async(req, res)=>{
     try{
         const { id } = req.params
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate('friends').populate('friendRequists');
         if (!user) throw new Error('user not found');
         res.status(200).json({
             success: true,
