@@ -47,19 +47,29 @@ const Chat = () => {
             console.log(err);
         }
     };
+    // Add this function above or inside your Chat component
+    const formatTime = (time) => {
+        const date = new Date(time);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    };
 
     // Send message to a friend
     const sendMessage = () => {
         if (selectedFriend && message) {
+            const currentTime = new Date().toISOString();
             socket.emit('send-message', {
                 recievedId: selectedFriend._id, // Friend's ID
                 message: message,
-                from: myAccount.userName // Sender's username
+                from: myAccount._id ,// Sender's username
+                timeStamps: currentTime
+
             });
             // Add the sent message to the local message array
             setMessages(prevMessages => [
                 ...prevMessages,
-                { message: message, from: myAccount.userName, type: 'sent' }
+                { message: message, from: myAccount._id, timeStamps: currentTime, type: 'sent' }
             ]);
             setMessage(''); // Clear input after sending
         }
@@ -73,9 +83,10 @@ const Chat = () => {
         getMyAccount(); // Fetch user account info and friends
 
         const recieveMessage = (data) => {
+            console.log(data);
             setMessages(prevMessages => [
                 ...prevMessages,
-                { message: data.message, from: data.from, type: 'received' }
+                { message: data.message, from: data.from, timeStamps: data.timeStamps ,type: 'received' }
             ]);
         };
 
@@ -122,10 +133,18 @@ const Chat = () => {
                                     key={index}
                                     className={`message ${msg.from === myAccount._id ? 'sent' : 'received'}`}
                                 >
-                                    {msg.message}
+                                    <>
+                                        <div className="message-content">
+                                            {msg.message}
+                                        </div>
+                                        <div className="message-time">
+                                            {formatTime(msg.timeStamps)} {/* Display formatted time */}
+                                        </div>
+                                    </>
                                 </div>
                             ))}
                         </div>
+
 
                         {/* Message Input */}
                         <div className="message-input">
