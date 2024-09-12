@@ -10,8 +10,10 @@ const PostRouter = require('./router/post');
 const commentRouter = require('./router/comment');
 const likeRouter = require('./router/like');
 const messageRouter = require('./router/messageRouter');
+const {initializeSocket} = require('./utils/io')
 const socketRouter = require('./router/socketRouter');
 const socketMiddleware = require('./middlewares/socket');
+const processMessage = require('./worker');
 const path = require('path');
 const app = express();
 const {Server} = require('socket.io');
@@ -19,18 +21,15 @@ const http = require('http');
 const jwt = require('jsonwebtoken');
 
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: 'http://localhost:3000',
-    }
-});
-
-app.use(cors());
-
+const io = initializeSocket(server)
 socketMiddleware(io);
 socketRouter(io);
 
+// workers
+processMessage();
+
 // middle ware
+app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(cookieParser());
@@ -47,4 +46,4 @@ app.use('/chat', messageRouter);
 connectDB();
 server.listen(port || 3000, (
     console.log(`Server is ruccing on port ${port || 3000}`)
-))
+));

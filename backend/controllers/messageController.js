@@ -1,16 +1,14 @@
 const Message = require('../models/message');
-
+const Queue = require('bull');
 
 exports.sendMessage = async(socket, data)=>{
     try{
-        const message = await Message.create({
-            from: socket.userId,
-            to: data.recievedId,
-            message: data.message
+        data.from = socket.userId;
+        const messageQueue = new Queue('message-queue');
+        messageQueue.add({
+            data
         });
-        console.log(message)
-        socket.to(data.recievedId).emit('recieve-message', data)
-
+        console.log('message added to queue');
     }catch(err){
         console.log(err);
     }
