@@ -3,8 +3,9 @@ const User = require('../models/user');
 const crypto = require('crypto')
 const sendEmail = require('../utils/sendEmail');
 const { promisify } = require('util');
+const Queue = require('bull');
 const env = require('dotenv').config();
-
+const loadTemplates = require('../utils/loadTemplates');
 const createSendToken = (user, statusCode, res)=>{
     const token = jwt.sign({id:user._id}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
@@ -16,11 +17,8 @@ const createSendToken = (user, statusCode, res)=>{
     }
     res.cookie('jwt', token, cookieOptions);
     user.password = undefined;
-    res.status(statusCode).json({
-        success: true,
-        token,
-        data: user
-    })
+    return token
+
 };
 
 
@@ -32,9 +30,22 @@ exports.signUp = async(req, res)=>{
         newUser.email = req.body.email;
         newUser.password = req.body.password;
         newUser.confirmPassword = req.body.confirmPassword;
-        const user = await User.create(newUser)
-        console.log(user)
-        createSendToken(user, 201, res)
+        const user = await User.create(newUser);
+        email = user.email;
+        subject = 'welcome to natours';
+        emailBodyHtml = loadTemplates('welcomeEmail', {
+            userName: user.userName,
+            confirmLink: 'http://localhost:3000/login'
+        })
+        const userQueue = new Queue('user-queue');
+        userQueue.add({email, subject, emailBodyHtml});
+        const token = createSendToken(user, 201, res)
+        res.status(200).json({
+            success: true,
+            msg: 'we have sent you virification email',
+            token,
+            data: user
+        })
         
     }catch(err){
         console.log(err.message)
@@ -52,7 +63,12 @@ exports.login = async(req, res)=>{
         if (!user || !(await user.correctPassword(password, user.password))) {
             throw new Error('incorrect email or password')
         }
-        createSendToken(user, 200, res)
+        const token = createSendToken(user, 200, res)
+        res.status(200).json({
+            success: true,
+            token,
+            data: user
+        })
 
     }catch(err){
         res.status(400).json({
@@ -185,8 +201,8 @@ exports.forgotPassword = async(req, res)=>{
 
 exports.resetPassword = async(req, res) =>{
     try{
-        const { token } = req.params
-        const encryptedToken = crypto.createHash("sha256").update(token).digest('hex');
+        const { resetToken } = req.params
+        const encryptedToken = crypto.createHash("sha256").update(resetToken).digest('hex');
         const user = await User.findOne({passwordResetToken:encryptedToken, passwordResetExpires: {$gt: Date.now()}});
         if (!user) throw new Error('user not found');
         user.password = req.body.password;
@@ -194,7 +210,12 @@ exports.resetPassword = async(req, res) =>{
         user.passwordResetToken = undefined;
         user.passwordResetExpires = undefined;
         await user.save()
-        createSendToken(user, 200, res)
+        const token = createSendToken(user, 200, res)
+        res.status(200).json({
+            success: true,
+            token,
+            data: user
+        })
     } catch(err){
         res.status(400).json({
             success: false,
@@ -212,7 +233,12 @@ exports.updatePassword = async(req, res)=>{
         user.password = req.body.password;
         user.confirmPassword = req.body.confirmPassword;
         await user.save()
-        createSendToken(user, 200, res)
+        const token = createSendToken(user, 200, res);
+        res.status(200).json({
+            success: true,
+            token,
+            data: user
+        })
 
     }catch(err){
         res.status(400).json({

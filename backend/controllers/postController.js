@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-
+// const redisClient = require('../utils/redis');
 exports.getPosts = async (req, res) =>{
     try{
         const posts = await Post.find();
