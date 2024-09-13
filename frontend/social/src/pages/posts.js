@@ -19,7 +19,7 @@ const Post = () => {
 
   const getPosts = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:3001/posts', {
+      const response = await axios.get('http://localhost:3001/posts/my-posts', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPosts(response.data.data); // Set posts data
