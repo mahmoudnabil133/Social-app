@@ -28,6 +28,8 @@ router.route('/:id')
     .get(postController.getOnePost)
     .patch(postController.updatePost)
     .delete(postController.deletePost);
+router.route('/user/:userId')
+    .get(postController.getUserPosts);
 
 router.use('/:postId/comments', commentRouter);
 router.use('/:postId/likes', likeRouter);
