@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Like = require('../models/like');
+const redisClient = require('../utils/redis')
 
 exports.getPostLikes = async(req, res)=>{
     try{
@@ -71,6 +72,15 @@ exports.createPostLike = async(req, res)=>{
         const like = await Like.create({type, post: postId, user: userId});
         post.likes.push(like._id);
         await post.save();
+        // post = await Post.findById(postId).populate('likes');
+        let cached_value = await redisClient.get(`posts_${post.postedBy}`);
+        if (cached_value !== null){
+            cached_value = JSON.parse(cached_value);
+            let index = cached_value.findIndex((post) => post._id === postId);
+            cached_value[index].likes.push(like);
+            console.log(cached_value[index]);
+            await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
+        }
         res.status(201).json({
             success: true,
             msg: 'like created',
@@ -97,6 +107,15 @@ exports.updatePostLike = async(req, res)=>{
             throw new Error('you are not authorized to update this like');
         }
         const updatedLike = await Like.findByIdAndUpdate(id, {type}, {new: true});
+        let post = await Post.findById(like.post);
+        let cached_value = await redisClient.get(`posts_${post.postedBy}`);
+        if (cached_value !== null){
+            cached_value = JSON.parse(cached_value);
+            let index = cached_value.findIndex((p) => p._id === post._id);
+            likeIndex = cached_value[index].likes.findIndex((l) => l._id === id);
+            cached_value[index].comments[likeIndex] = updatedLike;
+            await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
+        }
         res.status(200).json({
             success: true,
             msg: 'like updated',
@@ -120,10 +139,18 @@ exports.deletePostLike = async(req, res)=>{
             throw new Error('you are not authorized to delete this like');
         }
         const post = await Post.findById(like.post);
-        const likeIndex = post.likes.indexOf(id);
+        let likeIndex = post.likes.indexOf(id);
         post.likes.splice(likeIndex, 1);
         await post.save();
         await Like.findByIdAndDelete(id);
+        let cached_value = await redisClient.get(`posts_${post.postedBy}`);
+        if (cached_value !== null){
+            cached_value = JSON.parse(cached_value);
+            let index = cached_value.findIndex((p) => p._id === post._id);
+            likeIndex = cached_value[index].likes.findIndex((l) => l._id === id);
+            cached_value[index].comments.splice(likeIndex, 1);
+            await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
+        }
         res.status(200).json({
             success: true,
             msg: 'like deleted',
