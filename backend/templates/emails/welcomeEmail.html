@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Social App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #22BC66;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .content {
+            margin: 20px 0;
+        }
+        .content h2 {
+            color: #22BC66;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #22BC66;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Social App!</h1>
+        </div>
+        <div class="content">
+            <h2>Hello, {{userName}}!</h2>
+            <p>We're thrilled to have you here at Social App. Start connecting with others and enjoy our services to the fullest.</p>
+            <p>To confirm your account and start using our platform, please click the button below:</p>
+            <a class="btn" href="{{confirmLink}}">Confirm Your Account</a>
+        </div>
+        <div class="footer">
+            <p>If you didn't create an account with us, feel free to ignore this email.</p>
+            <p>Thank you,<br>The Social App Team</p>
+        </div>
+    </div>
+</body>
+</html>
