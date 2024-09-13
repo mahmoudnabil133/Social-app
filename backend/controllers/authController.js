@@ -24,7 +24,6 @@ const createSendToken = (user, statusCode, res)=>{
 
 exports.signUp = async(req, res)=>{
     try{
-        console.log(req.body)
         const newUser = {}
         newUser.userName = req.body.userName;
         newUser.email = req.body.email;
@@ -94,16 +93,12 @@ exports.logout = async(req, res)=>{
 
 exports.protect = async(req, res, next)=>{
     try{
-        console.log(req.cookies)
         let token;
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             token = req.headers.authorization.split(' ')[1];
-            console.log('got token from headers')
         } else if (req.cookies.jwt){
             token = req.cookies.jwt;
-            console.log('got token from cookies')
         }
-        console.log(token)
         if (!token) throw new Error('you are not logged in please login');
         // what is pomisify to get decoded ?
         let decoded;;
@@ -112,7 +107,6 @@ exports.protect = async(req, res, next)=>{
         } catch(err){
             throw new Error('token is invalid')
         }
-        console.log(decoded)
         const user = await User.findById(decoded.id)
         if (!user) throw new Error('user not found');
         if (user.changedPassword(decoded.iat)) {

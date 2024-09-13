@@ -143,7 +143,7 @@ exports.updatePost = async(req, res)=>{
         let cached_posts = await redisClient.get(`posts_${req.user.id}`);
         if (cached_posts !== null){
             cached_posts = JSON.parse(cached_posts);
-            index = cached_posts.findIndex(post => post._id === id);
+            index = cached_posts.findIndex(post => post._id.toString() === id);
             cached_posts[index] = updatedPost;
             await redisClient.set(`posts_${req.user.id}`, JSON.stringify(cached_posts), 4 * 24 * 60 * 60);
         }
@@ -170,7 +170,7 @@ exports.deletePost = async(req, res)=>{
         const cached_posts = await redisClient.get(`posts_${req.user.id}`);
         if (cached_posts !== null){
             const posts = JSON.parse(cached_posts);
-            const index = posts.findIndex(post => post._id === id);
+            const index = posts.findIndex(post => post._id.toString() === id);
             posts.splice(index, 1);
             await redisClient.set(`posts_${req.user.id}`, JSON.stringify(posts), 4 * 24 * 60 * 60);
         }

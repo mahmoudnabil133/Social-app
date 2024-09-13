@@ -108,11 +108,12 @@ exports.updateComment = async(req, res)=>{
         if (comment.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
         const updatedComment = await Comment.findByIdAndUpdate(id, req.body, {new: true, runValidators: true});
         let post = await Post.findById(comment.post);
+        console.log('post', post);
         let cached_value = await redisClient.get(`posts_${post.postedBy}`);
         if (cached_value !== null){
             cached_value = JSON.parse(cached_value);
-            let index = cached_value.findIndex((p) => p._id === post._id);
-            commentIndex = cached_value[index].comments.findIndex((com) => com._id === id);
+            let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
+            commentIndex = cached_value[index].comments.findIndex((com) => com._id.toString() === id);
             cached_value[index].comments[commentIndex] = updatedComment;
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         }
@@ -122,6 +123,7 @@ exports.updateComment = async(req, res)=>{
             data: updatedComment
         });
     }catch(err){
+        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
@@ -132,6 +134,7 @@ exports.updateComment = async(req, res)=>{
 exports.deleteComment = async(req, res)=>{
     try{
         const {id} = req.params;
+        console.log(id);
         const comment = await Comment.findById(id);
         if (!comment) throw new Error('comment not found');
         if (comment.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
@@ -142,8 +145,8 @@ exports.deleteComment = async(req, res)=>{
         let cached_value = await redisClient.get(`posts_${post.postedBy}`);
         if (cached_value !== null){
             cached_value = JSON.parse(cached_value);
-            let index = cached_value.findIndex((p) => p._id === post._id);
-            commentIndex = cached_value[index].comments.findIndex((com) => com._id === id);
+            let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
+            commentIndex = cached_value[index].comments.findIndex((com) => com._id.toString() === id);
             cached_value[index].comments.splice(commentIndex, 1);
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         }

@@ -77,6 +77,7 @@ exports.createPostLike = async(req, res)=>{
         if (cached_value !== null){
             cached_value = JSON.parse(cached_value);
             let index = cached_value.findIndex((post) => post._id === postId);
+            console.log(`index: ${index}`);
             cached_value[index].likes.push(like);
             console.log(cached_value[index]);
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
@@ -111,9 +112,9 @@ exports.updatePostLike = async(req, res)=>{
         let cached_value = await redisClient.get(`posts_${post.postedBy}`);
         if (cached_value !== null){
             cached_value = JSON.parse(cached_value);
-            let index = cached_value.findIndex((p) => p._id === post._id);
-            likeIndex = cached_value[index].likes.findIndex((l) => l._id === id);
-            cached_value[index].comments[likeIndex] = updatedLike;
+            let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
+            likeIndex = cached_value[index].likes.findIndex((l) => l._id.toString() === id);
+            cached_value[index].likes[likeIndex] = updatedLike;
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         }
         res.status(200).json({
@@ -146,9 +147,9 @@ exports.deletePostLike = async(req, res)=>{
         let cached_value = await redisClient.get(`posts_${post.postedBy}`);
         if (cached_value !== null){
             cached_value = JSON.parse(cached_value);
-            let index = cached_value.findIndex((p) => p._id === post._id);
-            likeIndex = cached_value[index].likes.findIndex((l) => l._id === id);
-            cached_value[index].comments.splice(likeIndex, 1);
+            let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
+            likeIndex = cached_value[index].likes.findIndex((l) => l._id.toString() === id.toString());
+            cached_value[index].likes.splice(likeIndex, 1);
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         }
         res.status(200).json({
