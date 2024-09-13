@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+const redisClient = require('../utils/redis');
 //.id & :id param is str
 //._id & [ mongoose.schema.types.objectId] is object
 exports.requistFriend = async(req, res)=>{
@@ -35,7 +35,7 @@ exports.acceptRequist = async(req, res)=>{
         currentUser.friends.push(requistingUser._id);
         requistingUser.friends.push(currentUser._id);
         curUserIndex = currentUser.friendRequists.indexOf(requistingUser._id);
-        currentUser.friendRequists.splice(currentUser, 1);
+        currentUser.friendRequists.splice(curUserIndex, 1);
         await currentUser.save({validateBeforeSave: false});
         await requistingUser.save({validateBeforeSave: false});
         res.status(200).json({

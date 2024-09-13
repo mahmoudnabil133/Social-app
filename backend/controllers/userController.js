@@ -27,19 +27,16 @@ exports.getAllUsers = async (req, res)=>{
 exports.getOneUser = async(req, res)=>{
     try{
         const { id } = req.params
-        let user;
+        let user = await User.findById(id).populate('friends').populate('friendRequists');
 
-        const value = await redisClient.get(`profile_${id}`);
-        console.log(value);
-        if (value !== null){
-            console.log('cache hit');
-            user = JSON.parse(value);
-            console.log(user);
-        } else{
-            console.log('cache miss');
-            user = await User.findById(id).populate('friends').populate('friendRequists');
-            await redisClient.set(`profile_${id}`, JSON.stringify(user), 4 * 24 * 60 * 60);
-        }
+        // const value = await redisClient.get(`profile_${id}`);
+        // if (value !== null){
+        //     console.log('cache hit get one user');
+        // } else{
+        //     console.log('cache miss get one user');
+        //     user = await User.findById(id).populate('friends').populate('friendRequists');
+        //     await redisClient.set(`profile_${id}`, JSON.stringify(user), 4 * 24 * 60 * 60);
+        // }
         if (!user) throw new Error('user not found');
         res.status(200).json({
             success: true,
