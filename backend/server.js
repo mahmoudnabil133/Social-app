@@ -13,13 +13,13 @@ const messageRouter = require('./router/messageRouter');
 const {initializeSocket} = require('./utils/io')
 const socketRouter = require('./router/socketRouter');
 const socketMiddleware = require('./middlewares/socket');
-const processMessage = require('./worker');
+const processMessage = require('./workers/msgWorker');
+const processEmail = require('./workers/emailWorker');
 const path = require('path');
 const app = express();
 const {Server} = require('socket.io');
 const http = require('http');
 const jwt = require('jsonwebtoken');
-
 const server = http.createServer(app);
 const io = initializeSocket(server)
 socketMiddleware(io);
@@ -27,6 +27,7 @@ socketRouter(io);
 
 // workers
 processMessage();
+processEmail();
 
 // middle ware
 app.use(cors());
