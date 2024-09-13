@@ -54,7 +54,8 @@ const UserSchema = new mongoose.Schema({
         ref: 'User'
     }]
 });
-
+UserSchema.index({userName: 1});
+UserSchema.index({email: 1});
 UserSchema.pre('save', async function(next){
     if(!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
@@ -83,7 +84,7 @@ UserSchema.methods.changedPassword = function(JWTTimeStamp) {
 UserSchema.methods.CreatePasswordResetToken  = function(){
     const resetToken = 
       crypto
-        .randomBytes(32)
+        .randomBytes(4)
         .toString('hex');
     this.passwordResetToken = 
       crypto

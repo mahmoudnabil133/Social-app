@@ -30,7 +30,8 @@ const PostSchema = new mongoose.Schema({
         default: Date.now
     }
 });
-
+PostSchema.index({postedBy: 1});
+PostSchema.index({created: -1});
 PostSchema.pre(/^find/, function(next){
     this.populate('comments').populate('likes');
     next();

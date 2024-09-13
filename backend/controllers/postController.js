@@ -20,7 +20,7 @@ exports.getPosts = async (req, res) =>{
 };
 exports.getMyPosts = async(req, res)=>{
     try{
-        const posts = await Post.find({postedBy: req.user.id});
+        const posts = await Post.find({postedBy: req.user.id}).sort({created: -1});
         res.status(200).json({
             success: true,
             msg: 'posts found',
@@ -124,3 +124,15 @@ exports.deletePost = async(req, res)=>{
     }
 };
 
+exports.removeUserPosts = async(req, res, next)=>{
+    try{
+        userId = req.params.id;
+        await Post.deleteMany({postedBy, userId});
+        next();
+    }catch(err){
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+    }
+}
