@@ -1,24 +1,32 @@
 const nodemailer = require('nodemailer');
-const sendEmail = async options =>{
-    // 1) create transporter
-    const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PROT,
-        auth: {
-            user: process.env.EMAIL_USERNAME,
-            pass: process.env.EMAIL_PASSWORD
-        }
-    })
-    // 2) Define options
-    mailOptions = {
-        from: 'mahmoud nabil <hoda@gmail.com>',
-        to: options.email,
-        subject: options.subject,
-        text: options.message
-    }
+const Mailgen = require('mailgen');
 
-    // 3) send email
-    await transporter.sendMail(mailOptions)
-}
+// Step 1: Set up the Nodemailer transporter
+const sendEmail = async (recipientEmail, subject, emailBodyHtml) => {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'hodanabil155@gmail.com',
+            pass: 'utip ljlx yleq wscy '
+        }
+    });
+
+    let message = {
+        from: 'hodanabil155@gmail.com',
+        to: recipientEmail,
+        subject: subject, // Dynamic subject
+        html: emailBodyHtml, // Dynamic HTML content
+        // text: emailBodyText  // Dynamic plain text content
+    };
+
+    try {
+        let info = await transporter.sendMail(message);
+        console.log('Email sent: %s', info.messageId);
+        return true;
+    } catch (error) {
+        console.error('Error occurred while sending email: ', error);
+        return false;
+    }
+};
 
 module.exports = sendEmail;

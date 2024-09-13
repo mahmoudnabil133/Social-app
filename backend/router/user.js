@@ -12,7 +12,7 @@ router.route('/logout')
     .get(authController.logout);
 router.route('/forgotPassword')
     .post(authController.forgotPassword);
-router.route('/resetPassword/:token')
+router.route('/resetPassword/:resetToken')
     .patch(authController.resetPassword);
 
 
