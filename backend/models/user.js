@@ -16,6 +16,13 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Please enter your email'],
         unique: true
     },
+    bio:{
+        type:String
+    },
+    photoUrl:{
+        type: String,
+        default: 'uploads/user.png'
+    },
     password: {
         type: String,
         required: [true, 'Please enter your password'],
