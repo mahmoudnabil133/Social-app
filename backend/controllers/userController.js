@@ -96,13 +96,15 @@ exports.updateMe = async(req, res)=>{
         console.log(req.body)
         const filteredObj = filterObject(req.body, 'userName', 'email');
         const user = await User.findByIdAndUpdate(req.user.id, filteredObj, 
-            {new: true, runValidators: true});
+            {new: true});
+        console.log('user updated ')
         res.status(200).json({
             success: true,
             msg: 'user updated',
             data: user
         })
     }catch(err){
+        console.log(err.message)
         res.status(400).json({
             success: false,
             msg: err.message

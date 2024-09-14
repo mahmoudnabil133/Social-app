@@ -226,8 +226,9 @@ exports.updatePassword = async(req, res)=>{
         }
         user.password = req.body.password;
         user.confirmPassword = req.body.confirmPassword;
-        await user.save()
+        await user.save({validateBeforeSave: false});
         const token = createSendToken(user, 200, res);
+        console.log('pass updated')
         res.status(200).json({
             success: true,
             token,
@@ -235,6 +236,7 @@ exports.updatePassword = async(req, res)=>{
         })
 
     }catch(err){
+        console.log(err.message)
         res.status(400).json({
             success: false,
             msg: err.message
