@@ -1,11 +1,11 @@
-import React, { useState, useCallback , useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Button, Card, Row, Col, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const Post = ({ post, token, refreshPosts }) => {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [hoveredReaction, setHoveredReaction] = useState(null);
+  const [hoveredReaction, setHoveredReaction] = useState(false);
   const [posts, setPosts] = useState([]);
   const [commentAdded, setCommentAdded] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -18,6 +18,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   // Function to close the dropdown if clicked outside
   const closeActions = () => setShowActions(false);
+
   // Handle reactions
   const handleReaction = async (type) => {
     try {
@@ -38,7 +39,7 @@ const Post = ({ post, token, refreshPosts }) => {
       });
       setCurrentUserId(res.data.data._id);
     } catch (err) {
-      console.log('Error getting me:', err.message);
+      console.log('Error getting user details:', err.message);
     }
   };
 
@@ -63,31 +64,30 @@ const Post = ({ post, token, refreshPosts }) => {
     // setShowActions(false);
   };
 
-  const deletePost = async(postId) => {
-    // Delete post 
-    try{
+  const deletePost = async (postId) => {
+    try {
       await axios.delete(`http://localhost:3001/posts/${postId}`, {
-        headers: { Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log('Error deleting post:', err);
     }
   };
+
   const updateComment = () => {
-    // Update post logic
+    // Update comment logic
     // setShowActions(false);
   };
 
-  const deleteComment = async(commentId) => {
-    // Delete post logic
-    try{
+  const deleteComment = async (commentId) => {
+    try {
       await axios.delete(`http://localhost:3001/comments/${commentId}`, {
-        headers: { Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log('Error deleting comment:', err);
     }
   };
 
@@ -117,132 +117,133 @@ const Post = ({ post, token, refreshPosts }) => {
   }, [commentAdded]);
 
   return (
-    <Card className="mb-4" style={{ width: '60%' }}>
-      <Card.Body>
-        <div className="d-flex align-items-start mb-2">
-          {/* Check if postedBy exists before rendering */}
-          {post.postedBy && (
-            <>
-              {post.postedBy.photoUrl && (
-                <img
-                  src={`http://localhost:3001/${post.postedBy.photoUrl}`}
-                  alt={post.postedBy.userName}
-                  className="rounded-circle"
-                  style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px' }}
-                />
-              )}
-              <div>
-                <strong>{post.postedBy.userName}</strong>
-                {/* Display post time in light black color */}
-                <div style={{ color: '#666', fontSize: '0.9em' }}>
-                  {new Date(post.created).toLocaleString()}
+    <div className="d-flex justify-content-center mb-4">
+      <Card style={{ width: '60%' }}>
+        <Card.Body>
+          <div className="d-flex align-items-start mb-2">
+            {/* Check if postedBy exists before rendering */}
+            {post.postedBy && (
+              <>
+                {post.postedBy.photoUrl && (
+                  <img
+                    src={`http://localhost:3001/${post.postedBy.photoUrl}`}
+                    alt={post.postedBy.userName}
+                    className="rounded-circle"
+                    style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px' }}
+                  />
+                )}
+                <div>
+                  <strong>{post.postedBy.userName}</strong>
+                  {/* Display post time in light black color */}
+                  <div style={{ color: '#666', fontSize: '0.9em' }}>
+                    {new Date(post.created).toLocaleString()}
+                  </div>
                 </div>
-              </div>
-              {/* Show "three dots" dropdown for the post author */}
-              {post.postedBy && post.postedBy._id === currentUserId && (
-                <Dropdown className="ml-auto" alignRight show={showActions} onToggle={setShowActions}>
-                  <Dropdown.Toggle
-                    variant="link"
-                    id="dropdown-basic"
-                    onClick={toggleActions}
-                  >
-                    •••
-                  </Dropdown.Toggle>
-  
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => { updatePost(post._id); closeActions(); }}>Update</Dropdown.Item>
-                    <Dropdown.Item onClick={() => { deletePost(post._id); closeActions(); }}>Delete</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </>
+                {/* Show "three dots" dropdown for the post author */}
+                {post.postedBy && post.postedBy._id === currentUserId && (
+                  <Dropdown className="ml-auto" alignRight show={showActions} onToggle={setShowActions}>
+                    <Dropdown.Toggle
+                      variant="link"
+                      id="dropdown-basic"
+                      onClick={toggleActions}
+                    >
+                      •••
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => { updatePost(post._id); closeActions(); }}>Update</Dropdown.Item>
+                      <Dropdown.Item onClick={() => { deletePost(post._id); closeActions(); }}>Delete</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </>
+            )}
+          </div>
+
+          <Card.Title>{post.title}</Card.Title>
+          <Card.Text>{post.body}</Card.Text>
+          {post.photoUrl && (
+            <Card.Img
+              variant="top"
+              src={`http://localhost:3001/${post.photoUrl}`}
+              style={{ width: '100%', height: 'auto' }}
+            />
           )}
-        </div>
-  
-        <Card.Title>{post.title}</Card.Title>
-        <Card.Text>{post.body}</Card.Text>
-        {post.photoUrl && (
-          <Card.Img
-            variant="top"
-            src={`http://localhost:3001/${post.photoUrl}`}
-            style={{ width: '100%', height: 'auto' }}
-          />
-        )}
-        
-        <Row className="mt-3">
-          <Col>
-            <div className="d-flex flex-column align-items-start">
-              <span>👍 {post.likes.length} Likes</span>
-              <Dropdown onMouseEnter={() => setHoveredReaction(true)} onMouseLeave={() => setHoveredReaction(false)}>
-                <Dropdown.Toggle variant="link" id="dropdown-basic">
-                  React
-                </Dropdown.Toggle>
-                <Dropdown.Menu show={hoveredReaction}>
-                  {['Like', 'Haha', 'Love', 'Dislike'].map(reaction => (
-                    <Dropdown.Item key={reaction} onClick={() => handleReaction(reaction)}>{reaction}</Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Col>
-          <Col>
-            <Button variant="link" onClick={toggleComments}>
-              💬 Comments ({post.comments.length})
-            </Button>
-          </Col>
-        </Row>
-  
-        {showComments && (
-        <div className="mt-3">
-          {post.comments.map(comment => (
-            <div key={comment._id} style={{ position: 'relative' }}>
-              <Card.Text>{comment.text}</Card.Text>
-              
-              {/* Display comment date in light black color */}
-              <div style={{ color: '#666', fontSize: '0.8em' }}>
-                {new Date(comment.created).toLocaleString()}
-              </div>
-
-              {/* If the comment is posted by the current user, show the 3 dots dropdown */}
-              {comment.postedBy && comment.postedBy === currentUserId && (
-                <Dropdown
-                  className="ml-auto"
-                  alignRight
-                  show={showActionsForComment === comment._id} // Show dropdown only for the specific comment
-                  onToggle={() => toggleActionsForComment(comment._id)}
-                  style={{ position: 'absolute', top: '0', right: '0' }}
-                >
-                  <Dropdown.Toggle
-                    variant="link"
-                    id="dropdown-basic"
-                    style={{ padding: 0 }}
-                  >
-                    •••
+          
+          <Row className="mt-3">
+            <Col>
+              <div className="d-flex flex-column align-items-start">
+                <span>👍 {post.likes.length} Likes</span>
+                <Dropdown onMouseEnter={() => setHoveredReaction(true)} onMouseLeave={() => setHoveredReaction(false)}>
+                  <Dropdown.Toggle variant="link" id="dropdown-basic">
+                    React
                   </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => { updateComment(comment._id); toggleActionsForComment(null); }}>Update</Dropdown.Item>
-                    <Dropdown.Item onClick={() => { deleteComment(comment._id); toggleActionsForComment(null); }}>Delete</Dropdown.Item>
+                  <Dropdown.Menu show={hoveredReaction}>
+                    {['Like', 'Haha', 'Love', 'Dislike'].map(reaction => (
+                      <Dropdown.Item key={reaction} onClick={() => handleReaction(reaction)}>{reaction}</Dropdown.Item>
+                    ))}
                   </Dropdown.Menu>
                 </Dropdown>
-              )}
-            </div>
-          ))}
+              </div>
+            </Col>
+            <Col>
+              <Button variant="link" onClick={toggleComments}>
+                💬 Comments ({post.comments.length})
+              </Button>
+            </Col>
+          </Row>
 
-          {/* Textarea for adding a new comment */}
-          <textarea
-            className="form-control mt-2"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Add a comment..."
-          />
-          <Button className="mt-2" onClick={() => addComment(post._id)}>Comment</Button>
-        </div>
-      )}
-      </Card.Body>
-    </Card>
+          {showComments && (
+          <div className="mt-3">
+            {post.comments.map(comment => (
+              <div key={comment._id} style={{ position: 'relative' }}>
+                <Card.Text>{comment.text}</Card.Text>
+                
+                {/* Display comment date in light black color */}
+                <div style={{ color: '#666', fontSize: '0.8em' }}>
+                  {new Date(comment.created).toLocaleString()}
+                </div>
+
+                {/* If the comment is posted by the current user, show the 3 dots dropdown */}
+                {comment.postedBy && comment.postedBy === currentUserId && (
+                  <Dropdown
+                    className="ml-auto"
+                    alignRight
+                    show={showActionsForComment === comment._id} // Show dropdown only for the specific comment
+                    onToggle={() => toggleActionsForComment(comment._id)}
+                    style={{ position: 'absolute', top: '0', right: '0' }}
+                  >
+                    <Dropdown.Toggle
+                      variant="link"
+                      id="dropdown-basic"
+                      style={{ padding: 0 }}
+                    >
+                      •••
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => { updateComment(comment._id); toggleActionsForComment(null); }}>Update</Dropdown.Item>
+                      <Dropdown.Item onClick={() => { deleteComment(comment._id); toggleActionsForComment(null); }}>Delete</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+            ))}
+
+            {/* Textarea for adding a new comment */}
+            <textarea
+              className="form-control mt-2"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+            />
+            <Button className="mt-2" onClick={() => addComment(post._id)}>Comment</Button>
+          </div>
+        )}
+        </Card.Body>
+      </Card>
+    </div>
   );
-  
 };
 
 export default Post;
