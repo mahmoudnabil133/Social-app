@@ -140,6 +140,7 @@ exports.deleteComment = async(req, res)=>{
         if (comment.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
         let post = await Post.findById(comment.post);
         commentIndex = post.comments.indexOf(id);
+        console.log(`index 1`, commentIndex);
         post.comments.splice(commentIndex, 1);
         await post.save();
         let cached_value = await redisClient.get(`posts_${post.postedBy}`);
@@ -147,6 +148,7 @@ exports.deleteComment = async(req, res)=>{
             cached_value = JSON.parse(cached_value);
             let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
             commentIndex = cached_value[index].comments.findIndex((com) => com._id.toString() === id);
+            console.log(`index 2`, commentIndex);
             cached_value[index].comments.splice(commentIndex, 1);
             await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         }

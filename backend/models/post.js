@@ -32,9 +32,9 @@ const PostSchema = new mongoose.Schema({
 });
 PostSchema.index({postedBy: 1});
 PostSchema.index({created: -1});
-PostSchema.pre(/^find/, function(next){
-    this.populate('postedBy').populate('comments').populate('likes');
-    next();
-})
+// PostSchema.pre(/^find/, function(next){
+//     this.populate('postedBy').populate('comments').populate('likes');
+//     next();
+// })
 
 module.exports = mongoose.model('Post', PostSchema);

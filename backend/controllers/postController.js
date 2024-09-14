@@ -3,7 +3,7 @@ const redisClient = require('../utils/redis');
 require('dotenv').config();
 exports.getPosts = async (req, res) =>{
     try{
-        const posts = await Post.find().sort({created: -1});
+        const posts = await Post.find().sort({created: -1}).populate('postedBy').populate('comments').populate('likes');
         if (!posts) throw new Error('No posts found');
         res.status(200).json({
             success: true,
@@ -57,7 +57,7 @@ exports.getMyPosts = async(req, res)=>{
             posts = JSON.parse(value);
         } else{
             console.log(`user posts missed cache`);
-            posts = await Post.find({postedBy: req.user.id}).sort({created: -1});
+            posts = await Post.find({postedBy: req.user.id}).sort({created: -1}).populate('postedBy').populate('comments').populate('likes');
             await redisClient.set(`posts_${req.user.id}`, JSON.stringify(posts), 4 * 24 * 60 * 60);
         }
         res.status(200).json({
@@ -136,7 +136,7 @@ exports.updatePost = async(req, res)=>{
         const post = await Post.findById(id);
         console.log(post.postedBy.toString(), req.user.id);
         if (!post) throw new Error('post not found');
-        if (post.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
+        if (post.postedBy._id.toString() !== req.user.id) throw new Error('User not authorized');
         const updatedPost = await Post.findByIdAndUpdate(id, req.body,
             {new: true, runValidators: true});
         if (!updatedPost) throw new Error('post not updated');
@@ -165,7 +165,8 @@ exports.deletePost = async(req, res)=>{
         const {id} = req.params;
         const post = await Post.findById(id);
         if (!post) throw new Error('post not found');
-        if (post.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
+        console.log(post.postedBy._id.toString(), req.user.id);
+        if (post.postedBy._id.toString() !== req.user.id) throw new Error('User not authorized');
         await Post.findByIdAndDelete(id);
         const cached_posts = await redisClient.get(`posts_${req.user.id}`);
         if (cached_posts !== null){
@@ -174,11 +175,13 @@ exports.deletePost = async(req, res)=>{
             posts.splice(index, 1);
             await redisClient.set(`posts_${req.user.id}`, JSON.stringify(posts), 4 * 24 * 60 * 60);
         }
+        console.log('post deleted');
         res.status(200).json({
             success: true,
             msg: 'post deleted',
         });
     }catch(err){
+        console.log(err);
         res.status(400).json({
             success: false,
             msg: err.message
