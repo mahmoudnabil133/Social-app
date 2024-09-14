@@ -10,10 +10,12 @@ import ProtectRoutes from './components/protectRoutes';
 import Post from './pages/posts';
 import Chat from './components/friends';
 import Requests from './components/friendRequists';
+import NavBar from './components/Navbar';
 
 function App() {
   return (
     <Router>
+      <NavBar/>
       <div className='app'>
         <Routes>
           <Route path='/' element={<Home/>}/>
@@ -24,13 +26,14 @@ function App() {
               < Profile/>
             </ProtectRoutes>
             } />
-          <Route path='/posts' element={
+          {/* <Route path='/posts' element={
             <ProtectRoutes>
               < Post/>
             </ProtectRoutes>
-            } />
+            } /> */}
             <Route path='/chat' element={<Chat/>} />
             <Route path='/requests' element={<Requests/>} />
+          <Route path='/navbar' element={<NavBar/>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </div>
