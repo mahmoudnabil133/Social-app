@@ -1,0 +1,30 @@
+/* Navbar.css */
+
+.navbar {
+  background-color: #131921;
+  border-bottom: 1px solid #232931;
+}
+
+.navbar-brand {
+  color: #887d7d;
+  font-weight: bold;
+}
+
+.navbar-toggler-icon {
+  color: #5692e7;
+}
+
+.nav-link {
+  color: #5692e7;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #9e2121;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    justify-content: flex-end;
+  }
+}
