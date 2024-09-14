@@ -20,7 +20,7 @@ router.use(authController.protect);
 router.route('/me')
     .get(userController.getMe, userController.getOneUser)
     .patch(userController.updateMe)
-    .delete(userController.deleteUser);
+    .delete(userController.getMe, userController.deleteUser);
 router.route('/updateMyPassword')
     .patch(authController.updatePassword);
 
