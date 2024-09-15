@@ -1,54 +1,74 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-const SignUp = ()=>{
+import axios from 'axios';
+import './signup.css';
+
+const SignUp = () => {
     const [userName, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPass] = useState("")
+    const [confirmPassword, setConfirmPass] = useState("");
     const navigate = useNavigate();
-    const handleLogin = async (e)=>{
-        console.log('login submitted')
+
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        try{
-            let response = await axios.post('http://localhost:3001/users/signup', {userName, email, password, confirmPassword});
-            response = response.data
-            console.log(response.token)
-            localStorage.setItem('token', response.token);
-            alert('sign up sucsess')
-            navigate('/')
-        }catch(err){
-            alert('sign up failed')
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
         }
-    }
+        try {
+            let response = await axios.post('http://localhost:3001/users/signup', { userName, email, password, confirmPassword });
+            response = response.data;
+            localStorage.clear();
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('userId', response.data._id);
+            alert('Sign up successful');
+            // refresh the page
+            // window.location.reload();
+            navigate('/');
+        } catch (err) {
+            alert('Sign up failed');
+        }
+    };
+
     return (
-        <div>
-            <h1>sign up</h1>
-            <form onSubmit={handleLogin} >
-                <input 
-                type='text'
-                placeholder='userName'
-                onChange={e=> setName(e.target.value)}
-                />
-                
-                <input 
-                type='email'
-                placeholder='add your mail'
-                onChange={e=> setEmail(e.target.value)}
-                />
-                <input 
-                type='password'
-                placeholder='add your pass'
-                onChange={e => setPassword(e.target.value)}
-                />
-               <input 
-                type='password'
-                placeholder='add your confirmpass'
-                onChange={e => setConfirmPass(e.target.value)}
-                />
-                <button type='submit'>sign up</button>
-            </form>
+        <div className="signup-container">
+            <div className="signup-form">
+                <h1>Sign Up</h1>
+                <form onSubmit={handleSignUp}>
+                    <input
+                        type="text"
+                        placeholder="User Name"
+                        value={userName}
+                        onChange={e => setName(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPass(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
         </div>
-    )
-}
+    );
+};
+
 export default SignUp;

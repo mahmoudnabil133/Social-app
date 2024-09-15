@@ -1,43 +1,60 @@
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-const Login = ()=>{
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const handleLogin = async (e)=>{
-        console.log('login submitted')
-        e.preventDefault();
-        try{
-            let response = await axios.post('http://localhost:3001/users/login', {email, password});
-            // response.data => convert response to object
-            response = response.data
-            console.log(response.token)
-            localStorage.setItem('token', response.token);
-            alert('login sucsess')
-            navigate('/')
-        }catch(err){
-            console.log(err)
-            alert('login failed')
-        }
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import './login.css';  // Assuming you will create this CSS file
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      let response = await axios.post('http://localhost:3001/users/login', { email, password });
+      response = response.data;
+      localStorage.clear();
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('userId', response.data._id);
+      alert('Login successful');
+      // window.location.reload();
+
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+      alert('Login failed');
     }
-    return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleLogin} >
-                <input 
-                type='email'
-                placeholder='add your mail'
-                onChange={e=> setEmail(e.target.value)}
-                />
-                <input 
-                type='password'
-                placeholder='add your pass'
-                onChange={e => setPassword(e.target.value)}
-                />
-                <button type='submit'>Login</button>
-            </form>
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">Login</h1>
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="login-input"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="login-input"
+            required
+          />
+          <button type="submit" className="login-btn">Login</button>
+        </form>
+        <div className="login-footer">
+          <p>Don't have an account? <Link to="/signup" className="signup-link">Sign up here</Link></p>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
+
 export default Login;
