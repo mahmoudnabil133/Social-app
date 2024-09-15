@@ -77,13 +77,13 @@ const Home = () => {
         Create Post
       </Button>
 
-      {loading ? (
+      {/* {loading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
           <Spinner animation="border" />
         </div>
       ) : error ? (
         <Alert variant="danger">{error}</Alert>
-      ) : (
+      ) : ( */}
         <>
           <Row className="justify-content-center">
             {posts.length > 0 ? (
@@ -142,7 +142,6 @@ const Home = () => {
             </Modal.Body>
           </Modal>
         </>
-      )}
     </Container>
   );
 };
