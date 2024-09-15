@@ -94,7 +94,10 @@ exports.updateMe = async(req, res)=>{
             throw new Error('this route is not for password update please use /updateMyPassword')
         }
         console.log(req.body)
-        const filteredObj = filterObject(req.body, 'userName', 'email');
+        let filteredObj = filterObject(req.body, 'userName', 'email', 'bio');
+        if (req.file){
+            filteredObj = {...filteredObj, photoUrl: `uploads/${req.file.filename}`}
+        }
         const user = await User.findByIdAndUpdate(req.user.id, filteredObj, 
             {new: true});
         console.log('user updated ')
