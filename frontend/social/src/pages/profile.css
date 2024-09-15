@@ -1,0 +1,94 @@
+/* Profile container styling */
+.profile-container {
+    max-width: 1200px;  /* Increase the overall container width */
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Profile header styling (user info section) */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .profile-photo {
+    width: 120px;  /* Increase profile photo size */
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 2px solid #007bff;
+  }
+  
+  .profile-details h2 {
+    font-size: 28px;  /* Larger username */
+    margin: 0;
+    color: #333;
+  }
+  
+  .profile-details h4 {
+    font-size: 20px;  /* Larger email */
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  /* Post section styling */
+  .user-posts {
+    margin-top: 20px;
+  }
+  
+  .posts-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Post styling */
+  .post {
+    background-color: #fff;
+    padding: 30px;  /* Increase padding for larger post appearance */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);  /* Enhance shadow for better visual */
+    margin-bottom: 30px;  /* More space between posts */
+    width: 100%;  /* Ensure post takes full width */
+  }
+  
+  .post h3 {
+    font-size: 24px;  /* Increase font size for post titles */
+    margin-bottom: 15px;
+  }
+  
+  .post p {
+    font-size: 18px;  /* Larger font size for post content */
+    color: #555;
+  }
+  
+  .post-image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;  /* More space above image */
+    border-radius: 8px;
+  }
+  
+  /* Button styling */
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 18px;  /* Increase padding for larger button */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
