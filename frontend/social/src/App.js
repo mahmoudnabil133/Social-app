@@ -11,6 +11,7 @@ import Post from './pages/posts';
 import Chat from './components/friends';
 import Requests from './components/friendRequists';
 import NavBar from './components/Navbar';
+import UserSetting from './pages/userSettings';
 
 function App() {
   return (
@@ -18,10 +19,10 @@ function App() {
       <NavBar/>
       <div className='app'>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<ProtectRoutes><Home/></ProtectRoutes>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/signup' element={<SignUp/>} />
-          <Route path='/profile' element={
+          <Route path='/profile/:userId' element={
             <ProtectRoutes>
               < Profile/>
             </ProtectRoutes>
@@ -34,6 +35,11 @@ function App() {
             <Route path='/chat' element={<Chat/>} />
             <Route path='/requests' element={<Requests/>} />
           <Route path='/navbar' element={<NavBar/>} />
+          <Route path='/user-settings' element={
+            <ProtectRoutes>
+              < UserSetting/>
+            </ProtectRoutes>
+            } />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </div>
