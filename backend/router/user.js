@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const friendController = require('../controllers/friendsController');
-
+const upload = require('../middlewares/uploadPhoto');
 router.route('/signup')
     .post(authController.signUp);
 router.route('/login')
@@ -19,7 +19,7 @@ router.route('/resetPassword/:resetToken')
 router.use(authController.protect);
 router.route('/me')
     .get(userController.getMe, userController.getOneUser)
-    .patch(userController.updateMe)
+    .patch(upload.single('photo'), userController.updateMe)
     .delete(userController.getMe, userController.deleteUser);
 router.route('/updateMyPassword')
     .patch(authController.updatePassword);

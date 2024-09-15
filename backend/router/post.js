@@ -4,17 +4,7 @@ const authController = require('../controllers/authController');
 const postController = require('../controllers/postController');
 const commentRouter = require('./comment');
 const likeRouter = require('./like');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, 'uploads/');
-    },
-    filename: function(req, file, cb){
-        cb(null, Date.now()+file.originalname);
-    }
-});
-const upload = multer({storage: storage});
+const upload = require('../middlewares/uploadPhoto');
 
 router.use(authController.protect);
 router.route('/')
