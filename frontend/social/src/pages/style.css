@@ -1,0 +1,47 @@
+.home-container {
+  padding: 0 15px;
+}
+
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+  margin: 0 auto; /* Center the card */
+}
+
+.post-card .card-body {
+  padding: 20px;
+}
+
+.post-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-footer {
+  background-color: #f7f7f7;
+  border-top: 1px solid #ddd;
+}
+
+.card-footer .btn {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .post-card {
+    width: 100%; /* Full width on small screens */
+    margin: 0; /* Remove margin on small screens */
+  }
+}
