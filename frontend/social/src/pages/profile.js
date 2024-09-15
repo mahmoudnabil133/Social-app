@@ -8,10 +8,16 @@ import './profile.css'; // Link to the CSS file
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [newImage, setNewImage] = useState(null); // For storing the new profile image
+  const [bio, setBio] = useState(''); // Bio input
+  const [isEditingBio, setIsEditingBio] = useState(false); // Toggle bio editing
+  const [uploadError, setUploadError] = useState(''); // Error for image upload
+  const [loading, setLoading] = useState(false); // Loading state for save operation
   const navigate = useNavigate();
   const { userId } = useParams();
   const token = localStorage.getItem('token');
 
+  // Fetch Profile
   const getProfile = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/users/${userId}`, {
@@ -20,11 +26,56 @@ const Profile = () => {
         },
       });
       setProfile(response.data.data);
+      setBio(response.data.data.bio || ''); // Set initial bio
     } catch (err) {
       alert('Failed to get profile');
     }
   };
 
+  // Combine Bio and Photo Update
+  const updateMe = async () => {
+    if (!profile) return;
+
+    const formData = new FormData();
+
+    // Append new image if available
+    if (newImage) {
+      formData.append('photo', newImage);
+    }
+
+    // Append new bio if it has changed
+    if (bio !== profile.bio) {
+      formData.append('bio', bio);
+    }
+
+    try {
+      setLoading(true);
+      const res = await axios.patch('http://localhost:3001/users/me', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data', // Required for file upload
+        },
+      });
+
+      // Update profile with the new data
+      setProfile(res.data.data);
+      setNewImage(null); // Clear the image input
+      setUploadError(''); // Clear any previous errors
+      setIsEditingBio(false); // End editing
+    } catch (err) {
+      console.error(err.message);
+      setUploadError('Error updating profile. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle bio change
+  const handleBioChange = (e) => {
+    setBio(e.target.value);
+  };
+
+  // Fetch User Posts
   const getUserPosts = async () => {
     try {
       const res = await axios.get(`http://localhost:3001/posts/user/${userId}`, {
@@ -45,32 +96,98 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      {profile && (
+      {profile ? (
         <div className="profile-header">
-          <img src={`http://localhost:3001/${profile.photoUrl}`} alt="User Profile" className="profile-photo" />
-          <div className="profile-details">
-            <h2>{profile.userName}</h2>
-            <h4>{profile.email}</h4>
-            {profile.bio && <p>{profile.bio}</p>}
-            {/* <Button variant="primary" onClick={() => navigate('/edit-profile')}>
-              Edit Profile
-            </Button> */}
-          </div>
+          {/* Profile Image */}
+          <form className="profile-photo-form">
+            <label htmlFor="upload-photo">
+              <img
+                src={`http://localhost:3001/${profile.photoUrl}`}
+                alt="User Profile"
+                className="profile-photo clickable"
+              />
+            </label>
+            <input
+              type="file"
+              id="upload-photo"
+              className="file-input"
+              accept="image/*"
+              onChange={(e) => setNewImage(e.target.files[0])}
+              hidden
+            />
+
+            <div className="profile-details">
+              <h2>{profile.userName}</h2>
+              <h4>{profile.email}</h4>
+
+              {/* Bio Section */}
+              <div className="bio-section">
+                {isEditingBio ? (
+                  <>
+                    <textarea
+                      className="bio-input"
+                      value={bio}
+                      onChange={handleBioChange}
+                      placeholder="Add your bio..."
+                    ></textarea>
+                    <Button
+                      type="button"
+                      variant="primary"
+                      className="update-btn"
+                      onClick={updateMe} // Manual save button
+                      disabled={loading}
+                    >
+                      {loading ? 'Saving...' : 'Save Bio'}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <p className="bio-text">{bio || 'No bio available'}</p>
+                    <Button
+                      variant="outline-primary"
+                      className="edit-bio-btn"
+                      onClick={() => setIsEditingBio(true)}
+                    >
+                      Edit Bio
+                    </Button>
+                  </>
+                )}
+              </div>
+
+              <Button
+                type="button"
+                variant="primary"
+                className="update-btn"
+                onClick={updateMe}
+                disabled={loading}
+              >
+                {loading ? 'Updating...' : 'Update Photo'}
+              </Button>
+
+              {uploadError && <Alert variant="danger">{uploadError}</Alert>}
+            </div>
+          </form>
         </div>
+      ) : (
+        <div className="loading-message">Loading profile...</div>
       )}
 
       <div className="user-posts">
         <h2 className="posts-title">Posts</h2>
         <Row className="justify-content-center">
-          {posts.length > 0 ? (
-            posts.map(post => (
-              <Col xs={12} md={10} lg={8} key={post._id} className="mb-4">
-                <Post post={post} token={token} refreshPosts={getUserPosts} />
-              </Col>
-            ))
-          ) : (
-            <Alert variant="info">No posts available</Alert>
-          )}
+          <Row className="justify-content-center flex-nowrap overflow-auto">
+            <Row className="justify-content-center">
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <Col xs={12} key={post._id} className="mb-4">
+                    <Post post={post} token={token} refreshPosts={getUserPosts} />
+                  </Col>
+                ))
+              ) : (
+                <Alert variant="info">No posts available</Alert>
+              )}
+            </Row>
+          </Row>
         </Row>
       </div>
     </div>

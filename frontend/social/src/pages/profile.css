@@ -1,94 +1,118 @@
-/* Profile container styling */
+/* Profile Container */
 .profile-container {
-    max-width: 1200px;  /* Increase the overall container width */
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Profile header styling (user info section) */
-  .profile-header {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-  }
-  
-  .profile-photo {
-    width: 120px;  /* Increase profile photo size */
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-    border: 2px solid #007bff;
-  }
-  
-  .profile-details h2 {
-    font-size: 28px;  /* Larger username */
-    margin: 0;
-    color: #333;
-  }
-  
-  .profile-details h4 {
-    font-size: 20px;  /* Larger email */
-    color: #666;
-    margin: 10px 0;
-  }
-  
-  /* Post section styling */
-  .user-posts {
-    margin-top: 20px;
-  }
-  
-  .posts-title {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Post styling */
-  .post {
-    background-color: #fff;
-    padding: 30px;  /* Increase padding for larger post appearance */
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);  /* Enhance shadow for better visual */
-    margin-bottom: 30px;  /* More space between posts */
-    width: 100%;  /* Ensure post takes full width */
-  }
-  
-  .post h3 {
-    font-size: 24px;  /* Increase font size for post titles */
-    margin-bottom: 15px;
-  }
-  
-  .post p {
-    font-size: 18px;  /* Larger font size for post content */
-    color: #555;
-  }
-  
-  .post-image {
-    width: 100%;
-    height: auto;
-    margin-top: 20px;  /* More space above image */
-    border-radius: 8px;
-  }
-  
-  /* Button styling */
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 12px 18px;  /* Increase padding for larger button */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 25px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+}
+
+/* Profile Header */
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-header:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.profile-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+}
+
+.profile-details h2 {
+  font-size: 30px;
+  margin: 0;
+  color: #333;
+}
+
+.profile-details h4 {
+  font-size: 18px;
+  color: #666;
+}
+
+.bio-section {
+  margin-top: 20px;
+}
+
+.bio-input {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.bio-input:focus {
+  border-color: #0056b3;
+}
+
+.update-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn:hover {
+  background-color: #0056b3;
+}
+
+/* User Posts */
+.posts-title {
+  text-align: center;
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.user-posts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.post-card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
