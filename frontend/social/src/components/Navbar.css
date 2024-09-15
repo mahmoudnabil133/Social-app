@@ -23,8 +23,16 @@
   color: #9e2121;
 }
 
-@media (max-width: 768px) {
-  .navbar-nav {
-    justify-content: flex-end;
-  }
+.navbar-nav .dropdown-menu {
+  background-color: #131921;
+  border: none;
+}
+
+.navbar-nav .dropdown-item {
+  color: #5692e7;
+}
+
+.navbar-nav .dropdown-item:hover {
+  background-color: #232931;
+  color: #ffffff;
 }

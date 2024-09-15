@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Button, Card, Row, Col, Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Post = ({ post, token, refreshPosts }) => {
@@ -125,12 +126,20 @@ const Post = ({ post, token, refreshPosts }) => {
             {post.postedBy && (
               <>
                 {post.postedBy.photoUrl && (
-                  <img
-                    src={`http://localhost:3001/${post.postedBy.photoUrl}`}
-                    alt={post.postedBy.userName}
-                    className="rounded-circle"
-                    style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px' }}
-                  />
+                  <Link to={`/profile/${post.postedBy._id}`}>
+                    <img
+                      src={`http://localhost:3001/${post.postedBy.photoUrl}`}
+                      alt={post.postedBy.userName}
+                      className="rounded-circle"
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        objectFit: 'cover',
+                        marginRight: '10px',
+                        cursor: 'pointer',  // Add cursor pointer to indicate clickable
+                      }}
+                    />
+                  </Link>
                 )}
                 <div>
                   <strong>{post.postedBy.userName}</strong>
