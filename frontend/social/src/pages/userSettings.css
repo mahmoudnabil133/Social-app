@@ -1,0 +1,69 @@
+.user-settings {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .user-settings h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .button-group {
+    margin-bottom: 20px;
+  }
+  
+  .btn-toggle, .btn-update, .btn-delete {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin: 10px 0;
+    cursor: pointer;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-toggle {
+    background-color: #3498db;
+  }
+  
+  .btn-update {
+    background-color: #2ecc71;
+  }
+  
+  .btn-delete {
+    background-color: #e74c3c;
+  }
+  
+  .btn-toggle:hover, .btn-update:hover, .btn-delete:hover {
+    opacity: 0.9;
+  }
+  
+  .success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .user-form, .password-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
