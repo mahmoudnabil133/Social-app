@@ -17,7 +17,7 @@ const SignUp = () => {
             return;
         }
         try {
-            let response = await axios.post('www.mahmoudnabil.tech:3001/users/signup', { userName, email, password, confirmPassword });
+            let response = await axios.post('http://www.mahmoudnabil.tech:3001/users/signup', { userName, email, password, confirmPassword });
             response = response.data;
             localStorage.clear();
             localStorage.setItem('token', response.token);

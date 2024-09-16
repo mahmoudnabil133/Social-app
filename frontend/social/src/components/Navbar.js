@@ -64,7 +64,7 @@ const Navbar = () => {
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <img
-                  src={`www.mahmoudnabil.tech:3001/${photoUrl}`} // Fallback to a default image if no photoUrl
+                  src={`http://www.mahmoudnabil.tech:3001/${photoUrl}`} // Fallback to a default image if no photoUrl
                   alt="Profile"
                   className="profile-photo"
                 />

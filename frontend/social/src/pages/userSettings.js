@@ -40,7 +40,7 @@ const UserSetting = () => {
 
     try {
       const res = await axios.patch(
-        `www.mahmoudnabil.tech:3001/users/me`,
+        `http://www.mahmoudnabil.tech:3001/users/me`,
         updatedData,
         {
           headers: {
@@ -61,7 +61,7 @@ const UserSetting = () => {
     setError(''); // Clear any previous error message
     try {
       const res = await axios.patch(
-        `www.mahmoudnabil.tech:3001/users/updateMyPassword`,
+        `http://www.mahmoudnabil.tech:3001/users/updateMyPassword`,
         { passwordCurrent, password, confirmPassword },
         {
           headers: {
@@ -81,7 +81,7 @@ const UserSetting = () => {
   const deleteMe = async () => {
     setError(''); // Clear any previous error message
     try {
-      await axios.delete(`www.mahmoudnabil.tech:3001/users/me`, {
+      await axios.delete(`http://www.mahmoudnabil.tech:3001/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

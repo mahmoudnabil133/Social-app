@@ -21,7 +21,7 @@ const Profile = () => {
   // Fetch Profile
   const getProfile = async () => {
     try {
-      const response = await axios.get(`www.mahmoudnabil.tech:3001/users/${userId}`, {
+      const response = await axios.get(`http://www.mahmoudnabil.tech:3001/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +51,7 @@ const Profile = () => {
 
     try {
       setLoading(true);
-      const res = await axios.patch('www.mahmoudnabil.tech:3001/users/me', formData, {
+      const res = await axios.patch('http://www.mahmoudnabil.tech:3001/users/me', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Required for file upload
@@ -79,7 +79,7 @@ const Profile = () => {
   // Fetch User Posts
   const getUserPosts = async () => {
     try {
-      const res = await axios.get(`www.mahmoudnabil.tech:3001/posts/user/${userId}`, {
+      const res = await axios.get(`http://www.mahmoudnabil.tech:3001/posts/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +103,7 @@ const Profile = () => {
           <form className="profile-photo-form">
             <label htmlFor="upload-photo">
               <img
-                src={`www.mahmoudnabil.tech:3001/${profile.photoUrl}`}
+                src={`http://www.mahmoudnabil.tech:3001/${profile.photoUrl}`}
                 alt="User Profile"
                 className={`profile-photo ${currentUserId === userId ? 'clickable' : ''}`} // Only clickable for current user
               />
