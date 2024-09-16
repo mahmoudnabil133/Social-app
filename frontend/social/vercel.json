@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "http://www.mahmoudnabil.tech:3001/$1"
+      }
+    ]
+  }
+  
