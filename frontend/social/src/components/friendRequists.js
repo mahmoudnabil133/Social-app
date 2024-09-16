@@ -11,7 +11,7 @@ const Requests = () => {
   // Fetch current user's friend requests
   const getMyAccount = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/users/me', {
+      const response = await axios.get('http://www.mahmoudnabil.tech:3001/users/me', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,7 +25,7 @@ const Requests = () => {
   // Fetch recommended friends
   const getRecommendedFriends = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/recommended-friends`, {
+      const response = await axios.get(`http://www.mahmoudnabil.tech:3001/users/recommended-friends`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const Requests = () => {
   // Send a friend request
   const sendRequest = async (toBeFriendId) => {
     try {
-      const response = await axios.post(`http://localhost:3001/users/friend-requist/${toBeFriendId}`, null, {
+      const response = await axios.post(`http://www.mahmoudnabil.tech:3001/users/friend-requist/${toBeFriendId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ const Requests = () => {
   // Accept a friend request
   const acceptRequest = async (requestingUserId) => {
     try {
-      const response = await axios.post(`http://localhost:3001/users/accept-friend-requist/${requestingUserId}`, null, {
+      const response = await axios.post(`http://www.mahmoudnabil.tech:3001/users/accept-friend-requist/${requestingUserId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -69,7 +69,7 @@ const Requests = () => {
   // Decline a friend request
   const declineRequest = async (requestingUserId) => {
     try {
-      const response = await axios.post(`http://localhost:3001/users/decline-friend-requist/${requestingUserId}`, null, {
+      const response = await axios.post(`http://www.mahmoudnabil.tech:3001/users/decline-friend-requist/${requestingUserId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
