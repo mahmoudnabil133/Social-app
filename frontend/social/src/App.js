@@ -27,14 +27,9 @@ function App() {
               < Profile/>
             </ProtectRoutes>
             } />
-          {/* <Route path='/posts' element={
-            <ProtectRoutes>
-              < Post/>
-            </ProtectRoutes>
-            } /> */}
-            <Route path='/chat' element={<Chat/>} />
-            <Route path='/requests' element={<Requests/>} />
-          <Route path='/navbar' element={<NavBar/>} />
+            <Route path='/chat' element={<ProtectRoutes><Chat/></ProtectRoutes>} />
+            <Route path='/requests' element={<ProtectRoutes><Requests/></ProtectRoutes>} />
+
           <Route path='/user-settings' element={
             <ProtectRoutes>
               < UserSetting/>
