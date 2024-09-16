@@ -15,12 +15,13 @@ const Profile = () => {
   const [loading, setLoading] = useState(false); // Loading state for save operation
   const navigate = useNavigate();
   const { userId } = useParams();
+  const currentUserId= localStorage.getItem('userId');
   const token = localStorage.getItem('token');
 
   // Fetch Profile
   const getProfile = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/${userId}`, {
+      const response = await axios.get(`www.mahmoudnabil.tech:3001/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,7 +51,7 @@ const Profile = () => {
 
     try {
       setLoading(true);
-      const res = await axios.patch('http://localhost:3001/users/me', formData, {
+      const res = await axios.patch('www.mahmoudnabil.tech:3001/users/me', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Required for file upload
@@ -78,7 +79,7 @@ const Profile = () => {
   // Fetch User Posts
   const getUserPosts = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/posts/user/${userId}`, {
+      const res = await axios.get(`www.mahmoudnabil.tech:3001/posts/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,19 +103,21 @@ const Profile = () => {
           <form className="profile-photo-form">
             <label htmlFor="upload-photo">
               <img
-                src={`http://localhost:3001/${profile.photoUrl}`}
+                src={`www.mahmoudnabil.tech:3001/${profile.photoUrl}`}
                 alt="User Profile"
-                className="profile-photo clickable"
+                className={`profile-photo ${currentUserId === userId ? 'clickable' : ''}`} // Only clickable for current user
               />
             </label>
-            <input
-              type="file"
-              id="upload-photo"
-              className="file-input"
-              accept="image/*"
-              onChange={(e) => setNewImage(e.target.files[0])}
-              hidden
-            />
+            {currentUserId === userId && (
+              <input
+                type="file"
+                id="upload-photo"
+                className="file-input"
+                accept="image/*"
+                onChange={(e) => setNewImage(e.target.files[0])}
+                hidden
+              />
+            )}
 
             <div className="profile-details">
               <h2>{profile.userName}</h2>
@@ -122,7 +125,7 @@ const Profile = () => {
 
               {/* Bio Section */}
               <div className="bio-section">
-                {isEditingBio ? (
+                {isEditingBio && currentUserId === userId ? (
                   <>
                     <textarea
                       className="bio-input"
@@ -134,7 +137,7 @@ const Profile = () => {
                       type="button"
                       variant="primary"
                       className="update-btn"
-                      onClick={updateMe} // Manual save button
+                      onClick={updateMe}
                       disabled={loading}
                     >
                       {loading ? 'Saving...' : 'Save Bio'}
@@ -143,26 +146,31 @@ const Profile = () => {
                 ) : (
                   <>
                     <p className="bio-text">{bio || 'No bio available'}</p>
-                    <Button
-                      variant="outline-primary"
-                      className="edit-bio-btn"
-                      onClick={() => setIsEditingBio(true)}
-                    >
-                      Edit Bio
-                    </Button>
+                    {currentUserId === userId && (
+                      <Button
+                        variant="outline-primary"
+                        className="edit-bio-btn"
+                        onClick={() => setIsEditingBio(true)}
+                      >
+                        Edit Bio
+                      </Button>
+                    )}
                   </>
                 )}
               </div>
 
-              <Button
-                type="button"
-                variant="primary"
-                className="update-btn"
-                onClick={updateMe}
-                disabled={loading}
-              >
-                {loading ? 'Updating...' : 'Update Photo'}
-              </Button>
+              {/* Show Update Photo button only if it's the current user's profile */}
+              {currentUserId === userId && (
+                <Button
+                  type="button"
+                  variant="primary"
+                  className="update-btn"
+                  onClick={updateMe}
+                  disabled={loading}
+                >
+                  {loading ? 'Updating...' : 'Update Photo'}
+                </Button>
+              )}
 
               {uploadError && <Alert variant="danger">{uploadError}</Alert>}
             </div>

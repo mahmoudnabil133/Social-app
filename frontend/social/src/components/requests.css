@@ -1,82 +1,107 @@
+/* General layout */
 .requests-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    border-left: 25%;
-    border-right: 25%;
-  }
-  
-  .friend-requests, .recommended-friends {
-    margin: 20px 0;
-  }
-  
-  .request-card, .recommended-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  button {
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-  }
-  
-  .accept-btn {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .decline-btn {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .add-friend-btn {
-    background-color: #008cba;
-    color: white;
-  }
-  .add-friend-btn {
-    background-color: #008cba; /* Default blue */
-    color: white;
-    cursor: pointer;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .add-friend-btn.clicked {
-    background-color: #4caf50; /* Green after click */
-    color: white;
-  }
-  
-  .accept-btn, .decline-btn {
-    margin: 5px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .accept-btn {
-    background-color: #28a745; /* Green for accept */
-    color: white;
-  }
-  
-  .decline-btn {
-    background-color: #dc3545; /* Red for decline */
-    color: white;
-  }
-  
-  .recommended-card, .request-card {
-    margin: 10px 0;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.friend-requests, .recommended-friends {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.request-card, .recommended-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.request-info, .recommended-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.friend-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.friend-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.action-buttons {
+  margin-top: 10px;
+}
+
+.accept-btn, .decline-btn, .add-friend-btn {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.accept-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.decline-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.add-friend-btn {
+  background-color: #008CBA;
+  color: white;
+}
+
+.add-friend-btn.clicked {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .requests-container {
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
   }
-  
+  .friend-photo {
+    width: 40px;
+    height: 40px;
+  }
+  .friend-name {
+    font-size: 1rem;
+  }
+  .accept-btn, .decline-btn, .add-friend-btn {
+    font-size: 0.8rem;
+  }
+}

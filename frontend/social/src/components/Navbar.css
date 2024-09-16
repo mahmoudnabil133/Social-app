@@ -1,38 +1,76 @@
-/* Navbar.css */
-
+/* Navbar Styles */
 .navbar {
-  background-color: #131921;
-  border-bottom: 1px solid #232931;
+  background-color: #f8f9fa;
+  padding: 1rem;
 }
 
 .navbar-brand {
-  color: #887d7d;
+  font-size: 1.5rem;
   font-weight: bold;
-}
-
-.navbar-toggler-icon {
-  color: #5692e7;
+  color: #333;
 }
 
 .nav-link {
-  color: #5692e7;
-  font-weight: 500;
+  color: #555;
+  font-size: 1.1rem;
+  margin-right: 20px;
 }
 
 .nav-link:hover {
-  color: #9e2121;
+  color: #007bff;
 }
 
-.navbar-nav .dropdown-menu {
-  background-color: #131921;
+/* Profile Photo Styling */
+.profile-photo-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  cursor: pointer;
+}
+
+.navbar-toggler {
   border: none;
 }
 
-.navbar-nav .dropdown-item {
-  color: #5692e7;
+.dropdown-menu {
+  min-width: 180px;
+  padding: 0.5rem 0;
 }
 
-.navbar-nav .dropdown-item:hover {
-  background-color: #232931;
-  color: #ffffff;
+.dropdown-item {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+}
+
+/* Navbar Responsiveness */
+@media (max-width: 991px) {
+  .profile-photo {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-nav .nav-item {
+    margin-bottom: 10px;
+  }
+
+  .profile-photo {
+    width: 30px;
+    height: 30px;
+  }
 }

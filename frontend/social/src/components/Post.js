@@ -34,7 +34,7 @@ const Post = ({ post, token, refreshPosts }) => {
   // Get current user
   const getMe = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/users/me`, {
+      const res = await axios.get(`www.mahmoudnabil.tech:3001/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCurrentUserId(res.data.data._id);
@@ -47,7 +47,7 @@ const Post = ({ post, token, refreshPosts }) => {
   const addComment = async (postId) => {
     try {
       await axios.post(
-        `http://localhost:3001/posts/${postId}/comments`,
+        `www.mahmoudnabil.tech:3001/posts/${postId}/comments`,
         { text: newComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -66,7 +66,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const getPostComments = async (postId) => {
     try {
-      const res = await axios.get(`http://localhost:3001/posts/${postId}/comments`, {
+      const res = await axios.get(`www.mahmoudnabil.tech:3001/posts/${postId}/comments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPostComments(res.data.data);
@@ -77,7 +77,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const deletePost = async (postId) => {
     try {
-      await axios.delete(`http://localhost:3001/posts/${postId}`, {
+      await axios.delete(`www.mahmoudnabil.tech:3001/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -93,7 +93,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const deleteComment = async (commentId, postId) => {
     try {
-      await axios.delete(`http://localhost:3001/comments/${commentId}`, {
+      await axios.delete(`www.mahmoudnabil.tech:3001/comments/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // await getPostComments(postId); // Refresh comments after deleting
@@ -107,11 +107,11 @@ const Post = ({ post, token, refreshPosts }) => {
   // Get posts
   const removeLike = async (postId) => {
     try {
-      const res = await axios.get(`http://localhost:3001/likes/my-like/${postId}`, {
+      const res = await axios.get(`www.mahmoudnabil.tech:3001/likes/my-like/${postId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const likeId = res.data.data._id;
-      await axios.delete(`http://localhost:3001/likes/${likeId}`, {
+      await axios.delete(`www.mahmoudnabil.tech:3001/likes/${likeId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -121,7 +121,7 @@ const Post = ({ post, token, refreshPosts }) => {
   };
   const likePost = async (postId) => {
     try {
-      await axios.post(`http://localhost:3001/posts/${postId}/likes`, { type: 'Like' }, {
+      await axios.post(`www.mahmoudnabil.tech:3001/posts/${postId}/likes`, { type: 'Like' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -164,7 +164,7 @@ const Post = ({ post, token, refreshPosts }) => {
                   {post.postedBy.photoUrl && (
                     <Link to={`/profile/${post.postedBy._id}`}>
                       <img
-                        src={`http://localhost:3001/${post.postedBy.photoUrl}`}
+                        src={`www.mahmoudnabil.tech:3001/${post.postedBy.photoUrl}`}
                         alt={post.postedBy.userName}
                         className="rounded-circle"
                         style={{
@@ -208,7 +208,7 @@ const Post = ({ post, token, refreshPosts }) => {
             {post.photoUrl && (
               <Card.Img
                 variant="top"
-                src={`http://localhost:3001/${post.photoUrl}`}
+                src={`www.mahmoudnabil.tech:3001/${post.photoUrl}`}
                 style={{ width: '100%', height: 'auto' }}
               />
             )}
@@ -248,7 +248,7 @@ const Post = ({ post, token, refreshPosts }) => {
                           {comment.postedBy.photoUrl && (
                             <Link to={`/profile/${comment.postedBy._id}`}>
                               <img
-                                src={`http://localhost:3001/${comment.postedBy.photoUrl}`}
+                                src={`www.mahmoudnabil.tech:3001/${comment.postedBy.photoUrl}`}
                                 alt={comment.postedBy.userName}
                                 className="rounded-circle"
                                 style={{

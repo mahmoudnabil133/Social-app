@@ -17,11 +17,12 @@ const SignUp = () => {
             return;
         }
         try {
-            let response = await axios.post('http://localhost:3001/users/signup', { userName, email, password, confirmPassword });
+            let response = await axios.post('www.mahmoudnabil.tech:3001/users/signup', { userName, email, password, confirmPassword });
             response = response.data;
             localStorage.clear();
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.data._id);
+            localStorage.setItem('photoUrl', response.data.photoUrl);
             alert('Sign up successful');
             // refresh the page
             // window.location.reload();
