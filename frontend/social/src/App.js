@@ -7,7 +7,6 @@ import SignUp from './pages/signup';
 import Profile from './pages/profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectRoutes from './components/protectRoutes';
-import Post from './pages/posts';
 import Chat from './components/friends';
 import Requests from './components/friendRequists';
 import NavBar from './components/Navbar';
