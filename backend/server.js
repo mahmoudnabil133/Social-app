@@ -21,10 +21,9 @@ const https = require('https');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/www.mahmoudnabil.tech/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/www.mahmoudnabil.tech/fullchain.pem')
-  };
-// Create an HTTPS server
+    key: fs.readFileSync('/home/mahmoudnabil/ssl/privkey.pem'),
+    cert: fs.readFileSync('/home/mahmoudnabil/ssl/fullchain.pem')
+};
 
 const server = https.createServer(options, app);
 const io = initializeSocket(server)
