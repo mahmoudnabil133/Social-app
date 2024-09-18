@@ -18,6 +18,7 @@ const processEmail = require('./workers/emailWorker');
 const path = require('path');
 const app = express();
 const https = require('https');
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const options = {
     key: fs.readFileSync('/etc/letsencrypt/live/www.mahmoudnabil.tech/privkey.pem'),
