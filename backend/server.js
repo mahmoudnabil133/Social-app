@@ -17,10 +17,15 @@ const processMessage = require('./workers/msgWorker');
 const processEmail = require('./workers/emailWorker');
 const path = require('path');
 const app = express();
-const {Server} = require('socket.io');
-const http = require('http');
+const https = require('https');
 const jwt = require('jsonwebtoken');
-const server = http.createServer(app);
+const options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/www.mahmoudnabil.tech/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/www.mahmoudnabil.tech/fullchain.pem')
+  };
+// Create an HTTPS server
+
+const server = https.createServer(options, app);
 const io = initializeSocket(server)
 socketMiddleware(io);
 socketRouter(io);
