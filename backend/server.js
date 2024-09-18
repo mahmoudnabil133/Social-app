@@ -46,6 +46,6 @@ app.use('/api/chat', messageRouter);
 
 
 connectDB();
-server.listen(port || 3000, (
+server.listen(port , '0.0.0.0' , (
     console.log(`Server is ruccing on port ${port || 3000}`)
 ));
