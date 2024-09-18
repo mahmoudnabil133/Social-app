@@ -3,7 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import './chat.css'; // Assuming you'll use a separate CSS file for styling
 
-const socket = io.connect('http://www.mahmoudnabil.tech:3001', {
+const socket = io.connect('https://www.mahmoudnabil.tech', {
     auth: {
         token: localStorage.getItem('token')
     }
@@ -20,7 +20,7 @@ const Chat = () => {
     // Fetch user account info and friends
     const getMyAccount = async () => {
         try {
-            const response = await axios.get('http://www.mahmoudnabil.tech:3001/users/me', {
+            const response = await axios.get('https://www.mahmoudnabil.tech/api/users/me', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -36,7 +36,7 @@ const Chat = () => {
     // Fetch chat history with the selected friend
     const getChat = async (friendId) => {
         try {
-            const response = await axios.get(`http://www.mahmoudnabil.tech:3001/chat/${friendId}`, {
+            const response = await axios.get(`https://www.mahmoudnabil.tech/api/chat/${friendId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

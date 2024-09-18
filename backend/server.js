@@ -31,34 +31,18 @@ processEmail();
 
 // middle ware
 // app.use(cors());
-const allowedOrigins = [
-  'http://www.mahmoudnabil.tech:3000',
-	'http://localhost:3000',
-  'https://social-app-git-main-mahmoudnabil133s-projects.vercel.app'
-];
 
-app.use(cors({
-  origin: function(origin, callback) {
-    // Check if the incoming origin is in the allowedOrigins list
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}))
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(cors())
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use('/users', userRouter);
-app.use('/posts', PostRouter);
-app.use('/comments', commentRouter);
-app.use('/likes', likeRouter);
-app.use('/chat', messageRouter);
+app.use('/api/users', userRouter);
+app.use('/api/posts', PostRouter);
+app.use('/api/comments', commentRouter);
+app.use('/api/likes', likeRouter);
+app.use('/api/chat', messageRouter);
 
 
 

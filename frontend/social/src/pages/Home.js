@@ -17,7 +17,7 @@ const Home = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('http://www.mahmoudnabil.tech:3001/posts', {
+      const response = await axios.get('https://www.mahmoudnabil.tech/api/posts', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPosts(response.data.data); // Set posts data
@@ -52,7 +52,7 @@ const Home = () => {
     }
 
     try {
-      await axios.post('http://www.mahmoudnabil.tech:3001/posts', formData, {
+      await axios.post('https://www.mahmoudnabil.tech/api/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
