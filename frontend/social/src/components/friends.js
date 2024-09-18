@@ -3,7 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import './chat.css'; // Assuming you'll use a separate CSS file for styling
 
-const socket = io.connect('http://www.mahmoudnabil.tech:3001/', {
+const socket = io.connect('http://localhost:3001', {
     auth: {
         token: localStorage.getItem('token')
     }
