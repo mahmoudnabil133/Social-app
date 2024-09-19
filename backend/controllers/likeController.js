@@ -1,6 +1,9 @@
 const Post = require('../models/post');
 const Like = require('../models/like');
-const redisClient = require('../utils/redis')
+const User = require('../models/user')
+const redisClient = require('../utils/redis');
+const Queue = require('bull')
+const Notification = require('../models/notification');
 
 exports.getPostLikes = async(req, res)=>{
     try{
@@ -64,12 +67,22 @@ exports.createPostLike = async(req, res)=>{
         const {postId} = req.params;
         const {type} = req.body;
         const userId = req.user.id;
+        const currentUser = await User.findById(userId)
         let post = await Post.findById(postId).populate('likes');
         if(!post) throw new Error('post not found');
         post.likes.forEach(like=>{
             if (like.user.toString() === userId) throw new Error('you already liked this post');
         });
         const like = await Like.create({type, post: postId, user: userId});
+        let notification = {
+            user: post.postedBy,
+            postId: post._id,
+            message: `${currentUser.userName} liked your post: ${post.title}`,
+        }
+        const notificationQueue = new Queue('notification-queue');
+        notificationQueue.add({
+            notification
+        });
         post.likes.push(like._id);
         await post.save();
         // post = await Post.findById(postId).populate('likes');

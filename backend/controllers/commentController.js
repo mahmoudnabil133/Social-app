@@ -1,5 +1,7 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const User = require('../models/user');
+const Queue = require('bull')
 const redisClient = require('../utils/redis');
 exports.getComments = async(req, res)=>{
     try{
@@ -67,6 +69,7 @@ exports.createComment = async(req, res)=>{
         const {text} = req.body;
         const postedBy = req.user.id;
         let post = await Post.findById(postId);
+        const currentUser = await User.findById(req.user.id);
         if (!post) throw new Error('post not found');
         const comment = {
             text,
@@ -75,6 +78,15 @@ exports.createComment = async(req, res)=>{
         };
         const newComment = await Comment.create(comment);
         post.comments.push(newComment._id);
+        let notification = {
+            user: post.postedBy,
+            postId: post._id,
+            message: `${currentUser.userName} commented on your post: ${post.title}`,
+        }
+        const notificationQueue = new Queue('notification-queue');
+        notificationQueue.add({
+            notification
+        });
         await post.save();
         // post = await Post.findById(postId).populate('comments');
         // let cached_value = await redisClient.get(`posts_${post.postedBy}`);

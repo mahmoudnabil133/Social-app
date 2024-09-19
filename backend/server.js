@@ -10,11 +10,13 @@ const PostRouter = require('./router/post');
 const commentRouter = require('./router/comment');
 const likeRouter = require('./router/like');
 const messageRouter = require('./router/messageRouter');
+const notificationRouter = require('./router/notificationRouter');
 const {initializeSocket} = require('./utils/io')
 const socketRouter = require('./router/socketRouter');
 const socketMiddleware = require('./middlewares/socket');
 const processMessage = require('./workers/msgWorker');
 const processEmail = require('./workers/emailWorker');
+const processNotification = require('./workers/notificationWorker');
 const path = require('path');
 const app = express();
 const http = require('http');
@@ -27,7 +29,7 @@ socketRouter(io);
 // workers
 processMessage();
 processEmail();
-
+processNotification();
 // middle ware
 // app.use(cors());
 
@@ -42,6 +44,7 @@ app.use('/api/posts', PostRouter);
 app.use('/api/comments', commentRouter);
 app.use('/api/likes', likeRouter);
 app.use('/api/chat', messageRouter);
+app.use('/api/notifications', notificationRouter);
 
 
 
