@@ -1,151 +1,169 @@
 /* Main card styling */
 .card {
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px; /* Increased radius for rounded corners */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  overflow: hidden; /* Ensure contents do not overflow the rounded corners */
+  margin-bottom: 20px; /* Space below each card */
+  max-width: 1000px; /* Increased card width (1.25 times the original 800px) */
+  width: 100%;
+  margin: 0 auto; /* Center the card */
+}
+
+/* Other styles remain unchanged */
+
+.card-body {
+  padding: 30px; /* Increased padding for more spacing inside the card */
+}
+
+/* Post Header */
+.post-header {
+  display: flex;
+  align-items: center; /* Align items to the center */
+  margin-bottom: 15px; /* Increased margin for spacing */
+}
+
+.post-header img {
+  width: 60px; /* Larger profile image */
+  height: 60px;
+  object-fit: cover;
+  margin-right: 15px; /* Increased margin */
+  cursor: pointer;
+  border-radius: 50%; /* Rounded profile image */
+}
+
+.post-header strong {
+  font-size: 1.3em; /* Larger font size */
+}
+
+.post-header .date {
+  color: #666;
+  font-size: 1em; /* Slightly larger font size */
+}
+
+/* Dropdown styling */
+.dropdown-toggle {
+  color: #333;
+  border: none;
+  background: none;
+  font-size: 1.8em; /* Larger font size */
+}
+
+.dropdown-toggle:hover {
+  color: #007bff;
+}
+
+.dropdown-menu {
+  min-width: 150px; /* Increased width for dropdown menu */
+}
+
+/* Post Content */
+.card-title {
+  font-size: 2em; /* Larger title font size */
+  font-weight: bold;
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.card-text {
+  margin-top: 15px; /* Increased margin at the top */
+  font-size: 1.2em; /* Larger font size */
+  line-height: 1.6; /* Improved line height for readability */
+}
+
+.card-img {
+  border-radius: 15px; /* Enhanced image border radius */
+  margin-top: 20px; /* Increased margin for spacing */
+  max-height: 500px; /* Larger max height */
+  width: 100%; /* Full width of the card */
+  object-fit: cover;
+}
+
+/* Post Actions (Like & Comments) */
+.post-actions {
+  margin-top: 20px; /* Increased margin */
+}
+
+.like-button {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 1.8em; /* Larger font size for better visibility */
+}
+
+.like-button.liked {
+  color: red;
+}
+
+.comment-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 16px; /* Increased padding */
+  cursor: pointer;
+  font-size: 1.2em; /* Larger font size */
+}
+
+.comment-button:hover {
+  background-color: #0056b3;
+}
+
+/* Comments Section */
+.comment-container {
+  margin-top: 25px; /* Increased margin */
+  border-top: 1px solid #ddd;
+  padding-top: 15px; /* Increased padding */
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px; /* Increased margin */
+}
+
+.comment-user-details {
+  display: flex;
+  align-items: center;
+}
+
+.comment-user-details img {
+  width: 40px; /* Larger profile image in comments */
+  height: 40px;
+  object-fit: cover;
+  margin-right: 15px; /* Increased margin */
+  border-radius: 50%;
+}
+
+.comment-text {
+  margin-top: 5px;
+  font-size: 1.1em; /* Larger font size */
+}
+
+.comment-input-container {
+  display: flex;
+  gap: 15px; /* Increased gap */
+}
+
+.comment-input {
+  flex-grow: 1;
+  padding: 10px; /* Increased padding */
+  font-size: 1.1em; /* Larger font size */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.comment-button {
+  padding: 10px 20px; /* Increased padding */
+  font-size: 1.2em; /* Larger font size */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    margin: 0; /* Remove horizontal margins */
   }
-  
-  .card-body {
-    padding: 20px;
+
+  .like-button, .comment-button {
+    font-size: 1.5em; /* Adjust font size for smaller screens */
   }
-  
-  /* Post Header */
-  .post-header {
-    display: flex;
-    align-items: start;
-    margin-bottom: 10px;
-  }
-  
-  .post-header img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .post-header strong {
-    font-size: 1.1em;
-  }
-  
-  .post-header .date {
-    color: #666;
-    font-size: 0.9em;
-  }
-  
-  /* Dropdown styling */
-  .dropdown-toggle {
-    color: #333;
-    border: none;
-    background: none;
-    font-size: 1.5em;
-  }
-  
-  .dropdown-toggle:hover {
-    color: #007bff;
-  }
-  
-  .dropdown-menu {
-    min-width: 120px;
-  }
-  
-  /* Post Content */
-  .card-title {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
-  .card-text {
-    margin-top: 10px;
-    font-size: 1.1em;
-  }
-  
-  .card-img {
-    border-radius: 10px;
-    margin-top: 15px;
-    max-height: 400px;
-    object-fit: cover;
-  }
-  
-  /* Post Actions (Like & Comments) */
-  .post-actions {
-    margin-top: 15px;
-  }
-  
-  .like-button {
-    background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-    font-size: 1.5em;
-  }
-  
-  .like-button.liked {
-    color: red;
-  }
-  
-  .comment-button {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .comment-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Comments Section */
-  .comment-container {
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 10px;
-  }
-  
-  .comment {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .comment-user-details {
-    display: flex;
-    align-items: center;
-  }
-  
-  .comment-user-details img {
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .comment-text {
-    margin-top: 5px;
-  }
-  
-  .comment-input-container {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .comment-input {
-    flex-grow: 1;
-    padding: 8px;
-  }
-  
-  .comment-button {
-    padding: 8px 16px;
-  }
-  
-  /* Responsive styling */
-  @media (max-width: 768px) {
-    .card {
-      width: 100%;
-    }
-  
-    .like-button, .comment-button {
-      font-size: 1.2em;
-    }
-  }
-  
+}

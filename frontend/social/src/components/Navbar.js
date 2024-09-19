@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faUserGroup, faComment, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'; // Link to your custom CSS file for styling
 import BaseUrl from '../api/api';
+
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+
   const handleLogout = () => {
     // Clear user authentication data and navigate to login or home page
     localStorage.removeItem('token');
     navigate('/login');
   };
+
   const userId = localStorage.getItem('userId');
   const photoUrl = localStorage.getItem('photoUrl');
 
@@ -44,16 +49,13 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} /> Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
+              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} /> Chat</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/chat">Chat</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/requests">Requests</Link>
+              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} /> Requests</Link>
             </li>
           </ul>
 
@@ -76,6 +78,9 @@ const Navbar = () => {
                   <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
                 </ul>
               )}
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} /> Login</Link>
             </li>
           </ul>
         </div>

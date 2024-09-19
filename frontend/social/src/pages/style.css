@@ -1,47 +1,30 @@
+/* Home Container */
 .home-container {
-  padding: 0 15px;
-}
-
-.post-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  background-color: #fff;
-  margin: 0 auto; /* Center the card */
-}
-
-.post-card .card-body {
   padding: 20px;
-}
-
-.post-card img {
-  max-width: 100%;
-  height: auto;
-}
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.card-text {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.card-footer {
+  padding-top: 80px; /* Adjust according to your navbar height */
   background-color: #f7f7f7;
-  border-top: 1px solid #ddd;
 }
 
-.card-footer .btn {
-  margin-right: 10px;
+/* Create Post Button */
+button.create-post {
+  background-color: #007bff; /* Different color for Create Post button */
+  border: 2px solid black; /* Black border under the button */
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  z-index: 2000; /* Ensure it is above other content */
+  position: relative; /* Adjust positioning if needed */
 }
 
-@media (max-width: 768px) {
-  .post-card {
-    width: 100%; /* Full width on small screens */
-    margin: 0; /* Remove margin on small screens */
-  }
+button.create-post:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  border-color: black; /* Keep the black border on hover */
+}
+
+button.create-post:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }

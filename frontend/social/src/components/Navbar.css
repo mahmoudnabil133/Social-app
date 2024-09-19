@@ -1,30 +1,58 @@
-/* Navbar Styles */
+/* Navbar.css */
 .navbar {
-  background-color: #f8f9fa;
-  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it is above other content */
+  border-bottom: 1px solid black; /* Black line under navbar */
+  background-color: #ffffff; /* Ensure visibility */
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 1.5rem; /* Adjust as needed */
 }
 
 .nav-link {
-  color: #555;
-  font-size: 1.1rem;
-  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem; /* Adjust as needed */
 }
 
-.nav-link:hover {
-  color: #007bff;
+.profile-photo {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-/* Profile Photo Styling */
+.login-btn {
+  margin-left: 1rem; /* Adjust as needed */
+}
+
+.navbar-nav .nav-link {
+  color: #333333; /* Text color for links */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff; /* Hover color */
+}
+
+.navbar-nav .nav-link .fa {
+  margin-right: 8px;
+  font-size: 18px; /* Adjust icon size */
+}
+
 .profile-photo-btn {
+  background: none;
   border: none;
-  background: transparent;
   padding: 0;
+  display: flex;
+  align-items: center;
+  position: relative; /* For positioning child elements */
 }
 
 .profile-photo {
@@ -32,45 +60,51 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #007bff;
-  cursor: pointer;
-}
-
-.navbar-toggler {
-  border: none;
+  border: 2px solid #007bff; /* Border around profile photo */
 }
 
 .dropdown-menu {
-  min-width: 180px;
-  padding: 0.5rem 0;
+  min-width: 200px; /* Set width for dropdown menu */
 }
 
 .dropdown-item {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #333;
+  color: #333333; /* Text color for dropdown items */
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #007bff;
+  background-color: #f8f9fa; /* Hover background color */
 }
 
-/* Navbar Responsiveness */
-@media (max-width: 991px) {
-  .profile-photo {
-    width: 35px;
-    height: 35px;
-  }
+/* Position login beside profile photo */
+.navbar-nav.ms-auto {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Space between profile photo and login button */
 }
 
-@media (max-width: 768px) {
-  .navbar-nav .nav-item {
-    margin-bottom: 10px;
+.login-btn {
+  font-size: 16px; /* Adjust font size for login button */
+  display: flex;
+  align-items: center;
+  color: #333333;
+}
+
+.login-btn .fa {
+  margin-right: 8px;
+  font-size: 18px; /* Adjust icon size */
+}
+
+/* Navbar styles for mobile view */
+@media (max-width: 767px) {
+  .navbar {
+    padding: 0.5rem 1rem;
   }
 
-  .profile-photo {
-    width: 30px;
-    height: 30px;
+  .navbar-nav {
+    flex-direction: column;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
   }
 }
