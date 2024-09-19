@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import BaseUrl from '../api/api';
+import './post.css';
 const Post = ({ post, token, refreshPosts }) => {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
