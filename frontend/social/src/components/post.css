@@ -58,14 +58,14 @@
 
 /* Post Content */
 .card-title {
-  font-size: 2em; /* Larger title font size */
+  font-size: 1.3em; /* Larger title font size */
   font-weight: bold;
   margin-bottom: 10px; /* Space below the title */
 }
 
 .card-text {
   margin-top: 15px; /* Increased margin at the top */
-  font-size: 1.2em; /* Larger font size */
+  font-size: 1em; /* Larger font size */
   line-height: 1.6; /* Improved line height for readability */
 }
 
