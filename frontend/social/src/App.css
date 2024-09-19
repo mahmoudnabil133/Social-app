@@ -1,6 +1,16 @@
+/* App.css */
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it takes the full viewport height */
+  margin-top: 56px; /* Adjust according to your navbar height */
 }
+
+.content {
+  flex: 1; /* Takes up remaining space */
+  padding: 1rem; /* Add padding to ensure content isn’t too close to edges */
+}
+
 
 .App-logo {
   height: 40vmin;
