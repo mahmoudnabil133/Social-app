@@ -24,5 +24,6 @@ const notificatioScema = new mongoose.Schema({
         default: Date.now()
     }
 });
-
+notificatioScema.index({date:-1});
+notificatioScema.index({user:1});
 module.exports = mongoose.model('Notification', notificatioScema);

@@ -3,7 +3,7 @@ const Notification = require('../models/notification');
 exports.getMyNotifications = async(req, res)=>{
     try{
         const userId = req.user.id;
-        const notifications = await Notification.find({user: userId});
+        const notifications = await Notification.find({user: userId}).sort({date: -1}).limit(20);
         if (notifications.length === 0) throw new Error('No notifications found');
         res.status(200).json({
             success: true,

@@ -1,0 +1,49 @@
+/* PostDetails CSS */
+.post-details-container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1000px; /* Increased max width */
+    padding-top: 80px; /* Adjust this value based on the height of your navbar */
+  }
+  
+  .post {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 30px; /* Increased padding */
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Increased box shadow for better elevation */
+  }
+  
+  .post-title {
+    font-size: 32px; /* Larger font size for the title */
+    font-weight: bold;
+    margin-bottom: 20px; /* More space between title and content */
+  }
+  
+  .post-content {
+    font-size: 18px; /* Larger font size for post content */
+    line-height: 1.8; /* Increased line height for better readability */
+    color: #333;
+  }
+  
+  .post-meta {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  
+  .post-meta span {
+    margin-right: 15px;
+  }
+  
+  .alert {
+    margin-top: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  

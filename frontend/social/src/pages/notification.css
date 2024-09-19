@@ -1,0 +1,51 @@
+.notifications-container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 600px;
+    padding-top: 70px; /* Adjust this value based on the height of your navbar */
+  }
+  
+  .notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .notification-item.unread {
+    background-color: #e6f7ff;
+  }
+  
+  .notification-item.read {
+    background-color: #f0f0f0;
+  }
+  
+  .notification-item p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .notification-item span {
+    color: #888;
+    font-size: 12px;
+  }
+  
+  .delete-btn {
+    background-color: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+  
+  .delete-btn:hover {
+    color: darkred;
+  }
+  

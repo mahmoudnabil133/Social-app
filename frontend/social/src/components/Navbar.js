@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faUserGroup, faComment, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faUserGroup, faComment, faRightToBracket, faBell } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'; // Link to your custom CSS file for styling
 import BaseUrl from '../api/api';
 
@@ -56,6 +56,9 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} /> Requests</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/notifications"><FontAwesomeIcon icon={faBell} /> Notifications</Link>
             </li>
           </ul>
 

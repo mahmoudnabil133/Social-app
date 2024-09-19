@@ -11,7 +11,8 @@ import Chat from './components/friends';
 import Requests from './components/friendRequists';
 import NavBar from './components/Navbar';
 import UserSetting from './pages/userSettings';
-
+import PostDetails from './pages/postDetails';
+import Notification from './pages/notification';
 function App() {
   return (
     <Router>
@@ -21,19 +22,12 @@ function App() {
           <Route path='/' element={<ProtectRoutes><Home/></ProtectRoutes>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/signup' element={<SignUp/>} />
-          <Route path='/profile/:userId' element={
-            <ProtectRoutes>
-              < Profile/>
-            </ProtectRoutes>
-            } />
-            <Route path='/chat' element={<ProtectRoutes><Chat/></ProtectRoutes>} />
-            <Route path='/requests' element={<ProtectRoutes><Requests/></ProtectRoutes>} />
-
-          <Route path='/user-settings' element={
-            <ProtectRoutes>
-              < UserSetting/>
-            </ProtectRoutes>
-            } />
+          <Route path='/profile/:userId' element={<ProtectRoutes>< Profile/></ProtectRoutes>} />
+          <Route path='/posts/:postId' element={<ProtectRoutes>< PostDetails/></ProtectRoutes>} />
+          <Route path='/chat' element={<ProtectRoutes><Chat/></ProtectRoutes>} />
+          <Route path='/requests' element={<ProtectRoutes><Requests/></ProtectRoutes>} />
+          <Route path='/user-settings' element={<ProtectRoutes>< UserSetting/></ProtectRoutes>} />
+          <Route path='/notifications' element={<ProtectRoutes>< Notification/></ProtectRoutes>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </div>
