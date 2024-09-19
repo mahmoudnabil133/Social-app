@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './chat.css'; // Assuming you'll use a separate CSS file for styling
-
-const socket = io.connect('https://www.mahmoudnabil.tech', {
+import BaseUrl from '../api/api';
+const socket = io.connect(`http://localhost:3001`, {
     auth: {
         token: localStorage.getItem('token')
     }
@@ -20,7 +20,7 @@ const Chat = () => {
     // Fetch user account info and friends
     const getMyAccount = async () => {
         try {
-            const response = await axios.get('https://www.mahmoudnabil.tech/api/users/me', {
+            const response = await axios.get(`${BaseUrl}/users/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -36,7 +36,7 @@ const Chat = () => {
     // Fetch chat history with the selected friend
     const getChat = async (friendId) => {
         try {
-            const response = await axios.get(`https://www.mahmoudnabil.tech/api/chat/${friendId}`, {
+            const response = await axios.get(`${BaseUrl}/chat/${friendId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

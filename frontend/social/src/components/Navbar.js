@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css'; // Link to your custom CSS file for styling
-
+import BaseUrl from '../api/api';
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Navbar = () => {
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <img
-                  src={`https://www.mahmoudnabil.tech/api/${photoUrl}`} // Fallback to a default image if no photoUrl
+                  src={`${BaseUrl}/${photoUrl}`} // Fallback to a default image if no photoUrl
                   alt="Profile"
                   className="profile-photo"
                 />

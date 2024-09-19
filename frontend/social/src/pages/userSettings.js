@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './userSettings.css';
-
+import BaseUrl from '../api/api';
 const UserSetting = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -40,7 +40,7 @@ const UserSetting = () => {
 
     try {
       const res = await axios.patch(
-        `https://www.mahmoudnabil.tech/api/users/me`,
+        `${BaseUrl}/users/me`,
         updatedData,
         {
           headers: {
@@ -61,7 +61,7 @@ const UserSetting = () => {
     setError(''); // Clear any previous error message
     try {
       const res = await axios.patch(
-        `https://www.mahmoudnabil.tech/api/users/updateMyPassword`,
+        `${BaseUrl}/users/updateMyPassword`,
         { passwordCurrent, password, confirmPassword },
         {
           headers: {
@@ -81,7 +81,7 @@ const UserSetting = () => {
   const deleteMe = async () => {
     setError(''); // Clear any previous error message
     try {
-      await axios.delete(`https://www.mahmoudnabil.tech/api/users/me`, {
+      await axios.delete(`${BaseUrl}/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

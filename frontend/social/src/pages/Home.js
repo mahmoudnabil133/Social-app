@@ -3,7 +3,7 @@ import axios from 'axios';
 import Post from '../components/Post';  // import the Post component
 import { Container, Row, Col, Spinner, Alert, Button, Form, Modal } from 'react-bootstrap';
 import './style.css'; // Import the custom styles
-
+import BaseUrl from '../api/api';
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const Home = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('https://www.mahmoudnabil.tech/api/posts', {
+      const response = await axios.get(`${BaseUrl}/posts`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPosts(response.data.data); // Set posts data
@@ -52,7 +52,8 @@ const Home = () => {
     }
 
     try {
-      await axios.post('https://www.mahmoudnabil.tech/api/posts', formData, {
+      await axios.post(`
+        ${BaseUrl}/posts`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`

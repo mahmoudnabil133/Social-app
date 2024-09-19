@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
-
+import BaseUrl from '../api/api';
 const SignUp = () => {
     const [userName, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const SignUp = () => {
             return;
         }
         try {
-            let response = await axios.post('https://www.mahmoudnabil.tech/api/users/signup', { userName, email, password, confirmPassword });
+            let response = await axios.post(`${BaseUrl}/users/signup`, { userName, email, password, confirmPassword });
             response = response.data;
             localStorage.clear();
             localStorage.setItem('token', response.token);

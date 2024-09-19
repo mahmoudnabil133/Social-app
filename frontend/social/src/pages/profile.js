@@ -4,7 +4,7 @@ import { Row, Col, Alert, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Post from '../components/Post';
 import './profile.css'; // Link to the CSS file
-
+import BaseUrl from '../api/api';
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -21,7 +21,7 @@ const Profile = () => {
   // Fetch Profile
   const getProfile = async () => {
     try {
-      const response = await axios.get(`https://www.mahmoudnabil.tech/api/users/${userId}`, {
+      const response = await axios.get(`${BaseUrl}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +51,7 @@ const Profile = () => {
 
     try {
       setLoading(true);
-      const res = await axios.patch('https://www.mahmoudnabil.tech/api/users/me', formData, {
+      const res = await axios.patch(`${BaseUrl}/users/me`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Required for file upload
@@ -79,7 +79,7 @@ const Profile = () => {
   // Fetch User Posts
   const getUserPosts = async () => {
     try {
-      const res = await axios.get(`https://www.mahmoudnabil.tech/api/posts/user/${userId}`, {
+      const res = await axios.get(`${BaseUrl}/posts/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +103,7 @@ const Profile = () => {
           <form className="profile-photo-form">
             <label htmlFor="upload-photo">
               <img
-                src={`https://www.mahmoudnabil.tech/api/${profile.photoUrl}`}
+                src={`${BaseUrl}/${profile.photoUrl}`}
                 alt="User Profile"
                 className={`profile-photo ${currentUserId === userId ? 'clickable' : ''}`} // Only clickable for current user
               />

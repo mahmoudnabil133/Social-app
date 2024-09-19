@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';  // Assuming you will create this CSS file
-
+import BaseUrl from '../api/api';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post('https://www.mahmoudnabil.tech/api/users/login', { email, password });
+      let response = await axios.post(`${BaseUrl}/users/login`, { email, password });
       response = response.data;
       localStorage.clear();
       localStorage.setItem('token', response.token);

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import BaseUrl from '../api/api';
 const Post = ({ post, token, refreshPosts }) => {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -34,7 +35,7 @@ const Post = ({ post, token, refreshPosts }) => {
   // Get current user
   const getMe = async () => {
     try {
-      const res = await axios.get(`https://www.mahmoudnabil.tech/api/users/me`, {
+      const res = await axios.get(`${BaseUrl}/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCurrentUserId(res.data.data._id);
@@ -47,7 +48,7 @@ const Post = ({ post, token, refreshPosts }) => {
   const addComment = async (postId) => {
     try {
       await axios.post(
-        `https://www.mahmoudnabil.tech/api/posts/${postId}/comments`,
+        `${BaseUrl}/posts/${postId}/comments`,
         { text: newComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -66,7 +67,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const getPostComments = async (postId) => {
     try {
-      const res = await axios.get(`https://www.mahmoudnabil.tech/api/posts/${postId}/comments`, {
+      const res = await axios.get(`${BaseUrl}/posts/${postId}/comments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPostComments(res.data.data);
@@ -77,7 +78,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const deletePost = async (postId) => {
     try {
-      await axios.delete(`https://www.mahmoudnabil.tech/api/posts/${postId}`, {
+      await axios.delete(`${BaseUrl}/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -93,7 +94,7 @@ const Post = ({ post, token, refreshPosts }) => {
 
   const deleteComment = async (commentId, postId) => {
     try {
-      await axios.delete(`https://www.mahmoudnabil.tech/api/comments/${commentId}`, {
+      await axios.delete(`${BaseUrl}/comments/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // await getPostComments(postId); // Refresh comments after deleting
@@ -107,11 +108,11 @@ const Post = ({ post, token, refreshPosts }) => {
   // Get posts
   const removeLike = async (postId) => {
     try {
-      const res = await axios.get(`https://www.mahmoudnabil.tech/api/likes/my-like/${postId}`, {
+      const res = await axios.get(`${BaseUrl}/likes/my-like/${postId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const likeId = res.data.data._id;
-      await axios.delete(`https://www.mahmoudnabil.tech/api/likes/${likeId}`, {
+      await axios.delete(`${BaseUrl}/likes/${likeId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -121,7 +122,7 @@ const Post = ({ post, token, refreshPosts }) => {
   };
   const likePost = async (postId) => {
     try {
-      await axios.post(`https://www.mahmoudnabil.tech/api/posts/${postId}/likes`, { type: 'Like' }, {
+      await axios.post(`${BaseUrl}/posts/${postId}/likes`, { type: 'Like' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refreshPosts();
@@ -164,7 +165,7 @@ const Post = ({ post, token, refreshPosts }) => {
                   {post.postedBy.photoUrl && (
                     <Link to={`/profile/${post.postedBy._id}`}>
                       <img
-                        src={`https://www.mahmoudnabil.tech/api/${post.postedBy.photoUrl}`}
+                        src={`${BaseUrl}/${post.postedBy.photoUrl}`}
                         alt={post.postedBy.userName}
                         className="rounded-circle"
                         style={{
@@ -208,7 +209,7 @@ const Post = ({ post, token, refreshPosts }) => {
             {post.photoUrl && (
               <Card.Img
                 variant="top"
-                src={`https://www.mahmoudnabil.tech/api/${post.photoUrl}`}
+                src={`${BaseUrl}/${post.photoUrl}`}
                 style={{ width: '100%', height: 'auto' }}
               />
             )}
@@ -248,7 +249,7 @@ const Post = ({ post, token, refreshPosts }) => {
                           {comment.postedBy.photoUrl && (
                             <Link to={`/profile/${comment.postedBy._id}`}>
                               <img
-                                src={`https://www.mahmoudnabil.tech/api/${comment.postedBy.photoUrl}`}
+                                src={`${BaseUrl}/${comment.postedBy.photoUrl}`}
                                 alt={comment.postedBy.userName}
                                 className="rounded-circle"
                                 style={{
