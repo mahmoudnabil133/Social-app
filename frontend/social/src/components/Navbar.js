@@ -4,11 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faUserGroup, faComment, faRightToBracket, faBell } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'; // Link to your custom CSS file for styling
 import BaseUrl from '../api/api';
+import axios from 'axios';
 
 const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [status, setStatus] = useState(false); // status for unread notifications
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const token = localStorage.getItem('token');
+
+  const isUnReadNot = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/notifications/isunread`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStatus(res.data.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const handleLogout = () => {
     // Clear user authentication data and navigate to login or home page
@@ -26,9 +42,10 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    isUnReadNot(); // Fetch the unread notifications status on mount
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [status]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -49,20 +66,26 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} /> Home</Link>
+              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} className="nav-icon" /> Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} /> Chat</Link>
+              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} className="nav-icon" /> Chat</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} /> Requests</Link>
+              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} className="nav-icon" /> Requests</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/notifications"><FontAwesomeIcon icon={faBell} /> Notifications</Link>
+              <Link className="nav-link" to="/notifications">
+                <div className="icon-container">
+                  <FontAwesomeIcon icon={faBell} className="nav-icon" />
+                  {status && <span className="notification-dot"></span>}
+                </div>
+                Notifications
+              </Link>
             </li>
           </ul>
 
-          <ul className="navbar-nav ms-auto"> {/* Move to the right */}
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item dropdown" ref={dropdownRef}>
               <button
                 className="nav-link dropdown-toggle profile-photo-btn"
@@ -83,7 +106,7 @@ const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} /> Login</Link>
+              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} className="nav-icon" /> Login</Link>
             </li>
           </ul>
         </div>

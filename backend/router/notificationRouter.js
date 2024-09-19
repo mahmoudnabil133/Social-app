@@ -11,4 +11,6 @@ router.route('/:id')
     .patch(notificationController.readNotification)
     .delete(notificationController.deleteNotification)
 
+router.route('/isunread')
+    .get(notificationController.ifUnReadNot);
 module.exports = router;

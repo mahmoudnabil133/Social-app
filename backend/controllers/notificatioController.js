@@ -55,4 +55,24 @@ exports.readNotification = async(req, res)=>{
             msg: err.message
         })
     }
+};
+
+exports.ifUnReadNot = async(req, res)=>{
+    try{
+        const userId = req.user.id;
+        const unreadNot = await Notification.find({user: userId, read: false});
+        let status;
+        if (unreadNot.length > 0) status = true;
+        else status = false;
+        res.status(200).json({
+            success: true,
+            msg: 'got status correctly',
+            data: status
+        });
+    }catch(err){
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        })
+    }
 }

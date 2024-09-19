@@ -1,4 +1,3 @@
-/* Navbar.css */
 .navbar {
   position: fixed;
   top: 0;
@@ -10,49 +9,36 @@
 }
 
 .navbar-brand {
-  font-size: 1.5rem; /* Adjust as needed */
+  font-size: 1.5rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  font-size: 1rem; /* Adjust as needed */
+  font-size: 1rem;
 }
 
-.profile-photo {
-  width: 30px; /* Adjust size as needed */
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.login-btn {
-  margin-left: 1rem; /* Adjust as needed */
-}
-
-.navbar-nav .nav-link {
-  color: #333333; /* Text color for links */
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #007bff; /* Hover color */
-}
-
-.navbar-nav .nav-link .fa {
+.nav-icon {
+  color: #007bff; /* Make icons blue */
   margin-right: 8px;
-  font-size: 18px; /* Adjust icon size */
+  font-size: 18px;
+  position: relative; /* For positioning the notification dot */
 }
 
-.profile-photo-btn {
-  background: none;
-  border: none;
-  padding: 0;
+.icon-container {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative; /* For positioning child elements */
+}
+
+.notification-dot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 8px;
+  height: 8px;
+  background-color: red; /* Red dot for unread notifications */
+  border-radius: 50%;
 }
 
 .profile-photo {
@@ -60,41 +46,32 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #007bff; /* Border around profile photo */
-}
-
-.dropdown-menu {
-  min-width: 200px; /* Set width for dropdown menu */
-}
-
-.dropdown-item {
-  color: #333333; /* Text color for dropdown items */
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa; /* Hover background color */
-}
-
-/* Position login beside profile photo */
-.navbar-nav.ms-auto {
-  display: flex;
-  align-items: center;
-  gap: 16px; /* Space between profile photo and login button */
+  border: 2px solid #007bff;
 }
 
 .login-btn {
-  font-size: 16px; /* Adjust font size for login button */
-  display: flex;
-  align-items: center;
+  margin-left: 1rem;
+}
+
+/* Styles for dropdown menu */
+.dropdown-menu {
+  min-width: 200px;
+}
+
+.dropdown-item {
   color: #333333;
 }
 
-.login-btn .fa {
-  margin-right: 8px;
-  font-size: 18px; /* Adjust icon size */
+.dropdown-item:hover {
+  background-color: #f8f9fa;
 }
 
-/* Navbar styles for mobile view */
+.navbar-nav.ms-auto {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 @media (max-width: 767px) {
   .navbar {
     padding: 0.5rem 1rem;
