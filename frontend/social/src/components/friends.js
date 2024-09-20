@@ -6,7 +6,8 @@ import BaseUrl from '../api/api';
 const socket = io.connect(`http://www.mahmoudnabil.tech:3001`, {
     auth: {
         token: localStorage.getItem('token')
-    }
+    },
+    transports: ['websocket']
 });
 
 const Chat = () => {
