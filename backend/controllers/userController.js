@@ -31,9 +31,7 @@ exports.getOneUser = async(req, res)=>{
 
         // const value = await redisClient.get(`profile_${id}`);
         // if (value !== null){
-        //     console.log('cache hit get one user');
         // } else{
-        //     console.log('cache miss get one user');
         //     user = await User.findById(id).populate('friends').populate('friendRequists');
         //     await redisClient.set(`profile_${id}`, JSON.stringify(user), 4 * 24 * 60 * 60);
         // }
@@ -93,21 +91,18 @@ exports.updateMe = async(req, res)=>{
         if (req.body.password || req.body.confirmPassword) {
             throw new Error('this route is not for password update please use /updateMyPassword')
         }
-        console.log(req.body)
         let filteredObj = filterObject(req.body, 'userName', 'email', 'bio');
         if (req.file){
             filteredObj = {...filteredObj, photoUrl: `uploads/${req.file.filename}`}
         }
         const user = await User.findByIdAndUpdate(req.user.id, filteredObj, 
             {new: true});
-        console.log('user updated ')
         res.status(200).json({
             success: true,
             msg: 'user updated',
             data: user
         })
     }catch(err){
-        console.log(err.message)
         res.status(400).json({
             success: false,
             msg: err.message

@@ -6,12 +6,9 @@ const socketRouter = (io)=>{
         socket.join(socket.userId);
         console.log('user connected with id', socket.userId);
         socket.on('send-message', (data)=>{
-            console.log('msg sent')
             messsageController.sendMessage(socket, data);
         });
         socket.on('disconnect', ()=>{
-            console.log('user disconnected')
-            console.log('user disconnected');
         })
     })
 }

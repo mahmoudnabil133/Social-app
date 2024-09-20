@@ -47,7 +47,6 @@ exports.signUp = async(req, res)=>{
         })
         
     }catch(err){
-        console.log(err.message)
         res.status(400).json({
             success: false,
             msg: err.message
@@ -79,7 +78,6 @@ exports.login = async(req, res)=>{
 
 exports.logout = async(req, res)=>{
     // remove cookies from browser.
-    console.log('logout')
     res.cookie('jwt', 'loogedout',{
         expires: new Date(Date.now() + 10 * 1000),
         httpOnley: true
@@ -228,7 +226,6 @@ exports.updatePassword = async(req, res)=>{
         user.confirmPassword = req.body.confirmPassword;
         await user.save({validateBeforeSave: false});
         const token = createSendToken(user, 200, res);
-        console.log('pass updated')
         res.status(200).json({
             success: true,
             token,
@@ -236,7 +233,6 @@ exports.updatePassword = async(req, res)=>{
         })
 
     }catch(err){
-        console.log(err.message)
         res.status(400).json({
             success: false,
             msg: err.message

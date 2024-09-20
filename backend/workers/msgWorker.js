@@ -4,7 +4,6 @@ const Message = require('../models/message');
 
 const processMessage = async()=>{
     const messageQueue = new Queue('message-queue');
-    // console.log('worker is running');
     messageQueue.process(async(job)=>{
         const {data} = job.data;
         const message = await Message.create({
@@ -16,12 +15,12 @@ const processMessage = async()=>{
         const io = getIo();
         io.to(data.recievedId).emit('recieve-message', data);
     });
-    messageQueue.on('completed', (job, result)=>{
-        console.log(`job :${job.id} completed`);
-    });
-    messageQueue.on('failed', (job, err)=>{
-        console.log(`job ${job.id}failed: ${err.message}`);
-    });
+    // messageQueue.on('completed', (job, result)=>{
+    //     console.log(`job :${job.id} completed`);
+    // });
+    // messageQueue.on('failed', (job, err)=>{
+    //     console.log(`job ${job.id}failed: ${err.message}`);
+    // });
 
 };
 module.exports = processMessage;

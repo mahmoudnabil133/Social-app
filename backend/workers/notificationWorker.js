@@ -12,12 +12,12 @@ const processNotification = async()=>{
         const io = getIo();
         io.to(notification.user).emit('recieve-notification', notification);
         
-        notificationQueue.on('completed', (job, result)=>{
-            console.log(`job ${job.id} completed`);
-        });
-        notificationQueue.on('failed', ()=>{
-            console.log(`job ${job.id} failed: ${err.message}`);
-        })
+        // notificationQueue.on('completed', (job, result)=>{
+        //     console.log(`job ${job.id} completed`);
+        // });
+        // notificationQueue.on('failed', ()=>{
+        //     console.log(`job ${job.id} failed: ${err.message}`);
+        // })
     })
 
 };

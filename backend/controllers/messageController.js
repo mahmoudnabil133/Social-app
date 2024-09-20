@@ -8,9 +8,7 @@ exports.sendMessage = async(socket, data)=>{
         messageQueue.add({
             data
         });
-        console.log('message added to queue');
     }catch(err){
-        console.log(err);
     }
 };
 

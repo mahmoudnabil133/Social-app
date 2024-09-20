@@ -6,7 +6,6 @@ const redisClient = require('../utils/redis');
 exports.getComments = async(req, res)=>{
     try{
         let query = {};
-        console.log(req.params);
         if (req.params.postId){
             query = {post: req.params.postId};
         }
@@ -94,7 +93,6 @@ exports.createComment = async(req, res)=>{
         //     cached_value = JSON.parse(cached_value);
         //     let index = cached_value.findIndex((post) => post._id === postId);
         //     cached_value[index].comments.push(newComment);
-        //     // console.log(cached_value[index]);
         //     await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         // }
         res.status(200).json({
@@ -103,7 +101,6 @@ exports.createComment = async(req, res)=>{
             data: newComment
         });
     }catch(err){
-        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
@@ -114,14 +111,11 @@ exports.createComment = async(req, res)=>{
 exports.updateComment = async(req, res)=>{
     try{
         const {id} = req.params;
-        // console.log(id);
-        console.log(req.user.id);
         const comment = await Comment.findById(id);
         if (!comment) throw new Error('comment not found');
         if (comment.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
         const updatedComment = await Comment.findByIdAndUpdate(id, req.body, {new: true, runValidators: true});
         let post = await Post.findById(comment.post);
-        console.log('post', post);
         // let cached_value = await redisClient.get(`posts_${post.postedBy}`);
         // if (cached_value !== null){
         //     cached_value = JSON.parse(cached_value);
@@ -136,7 +130,6 @@ exports.updateComment = async(req, res)=>{
             data: updatedComment
         });
     }catch(err){
-        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
@@ -147,14 +140,11 @@ exports.updateComment = async(req, res)=>{
 exports.deleteComment = async(req, res)=>{
     try{
         const {id} = req.params;
-        console.log(id);
         const comment = await Comment.findById(id);
         if (!comment) throw new Error('comment not found');
         if (comment.postedBy.toString() !== req.user.id) throw new Error('User not authorized');
         let post = await Post.findById(comment.post);
-        console.log('comments', post.comments);
         commentIndex = post.comments.indexOf(comment._id);
-        console.log(`index 1`, commentIndex);
         post.comments.splice(commentIndex, 1); 
         await Comment.findByIdAndDelete(id);
         await post.save();
@@ -163,7 +153,6 @@ exports.deleteComment = async(req, res)=>{
         //     cached_value = JSON.parse(cached_value);
         //     let index = cached_value.findIndex((p) => p._id.toString() === post._id.toString());
         //     commentIndex = cached_value[index].comments.findIndex((com) => com._id.toString() === id);
-        //     console.log(`index 2`, commentIndex);
         //     cached_value[index].comments.splice(commentIndex, 1);
         //     await redisClient.set(`posts_${post.postedBy}`, JSON.stringify(cached_value), 4 * 24 * 60 * 60);
         // }
@@ -172,7 +161,6 @@ exports.deleteComment = async(req, res)=>{
             msg: 'comment deleted',
         });
     }catch(err){
-        console.log(err.message);
         res.status(500).json({
             success: false,
             msg: err.message
