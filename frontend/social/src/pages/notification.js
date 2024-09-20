@@ -8,7 +8,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import BaseUrl from '../api/api';
 
 // Connect to socket.io server
-const socket = io.connect('http://localhost:3001', {
+const socket = io.connect('https://www.mahmoudnabil.tech', {
   auth: {
     token: localStorage.getItem('token'),
   },
