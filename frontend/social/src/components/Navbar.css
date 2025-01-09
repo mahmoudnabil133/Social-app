@@ -6,6 +6,7 @@
   z-index: 1000; /* Ensure it is above other content */
   border-bottom: 1px solid black; /* Black line under navbar */
   background-color: #ffffff; /* Ensure visibility */
+  height: 66px; /* Explicitly set the height to 66px */
 }
 
 .navbar-brand {
