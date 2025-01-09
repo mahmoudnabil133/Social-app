@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
+  flex-direction: column; /* Place words under icons */
 }
 
 .nav-icon {
@@ -24,6 +25,16 @@
   margin-right: 8px;
   font-size: 18px;
   position: relative; /* For positioning the notification dot */
+}
+
+.nav-icon.friends {
+  font-size: 14px; /* Smaller size */
+  color: green; /* Green color */
+}
+
+.nav-icon.home {
+  font-size: 22px; /* Bigger size */
+  color: red; /* Red color */
 }
 
 .icon-container {
@@ -38,7 +49,7 @@
   right: -5px;
   width: 8px;
   height: 8px;
-  background-color: red; /* Red dot for unread notifications */
+  background-color: darkblue; /* Dark blue color */
   border-radius: 50%;
 }
 

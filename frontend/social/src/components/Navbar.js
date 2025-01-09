@@ -66,13 +66,13 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} className="nav-icon" /> Home</Link>
+              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} className="nav-icon home" /><br />Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} className="nav-icon" /> Chat</Link>
+              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} className="nav-icon" /><br />Chat</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} className="nav-icon" /> Requests</Link>
+              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} className="nav-icon friends" /><br />Requests</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/notifications">
@@ -80,7 +80,7 @@ const Navbar = () => {
                   <FontAwesomeIcon icon={faBell} className="nav-icon" />
                   {status && <span className="notification-dot"></span>}
                 </div>
-                Notifications
+                <br />Notifications
               </Link>
             </li>
           </ul>
@@ -106,7 +106,7 @@ const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} className="nav-icon" /> Login</Link>
+              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} className="nav-icon" /><br />Login</Link>
             </li>
           </ul>
         </div>
