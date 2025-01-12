@@ -66,21 +66,36 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/"><FontAwesomeIcon icon={faHouse} className="nav-icon" /> Home</Link>
+              <Link className="nav-link" to="/">
+                <div className="icon-container">
+                  <FontAwesomeIcon icon={faHouse} className="nav-icon home-icon" />
+                </div>
+                <span className="nav-text">Home</span>
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/chat"><FontAwesomeIcon icon={faComment} className="nav-icon" /> Chat</Link>
+              <Link className="nav-link" to="/chat">
+                <div className="icon-container">
+                  <FontAwesomeIcon icon={faComment} className="nav-icon" />
+                </div>
+                <span className="nav-text">Chat</span>
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/requests"><FontAwesomeIcon icon={faUserGroup} className="nav-icon" /> Requests</Link>
+              <Link className="nav-link" to="/requests">
+                <div className="icon-container">
+                  <FontAwesomeIcon icon={faUserGroup} className="nav-icon friends-icon" />
+                </div>
+                <span className="nav-text">Requests</span>
+              </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/notifications">
                 <div className="icon-container">
-                  <FontAwesomeIcon icon={faBell} className="nav-icon" />
+                  <FontAwesomeIcon icon={faBell} className="nav-icon notification-icon" />
                   {status && <span className="notification-dot"></span>}
                 </div>
-                Notifications
+                <span className="nav-text">Notifications</span>
               </Link>
             </li>
           </ul>
@@ -106,7 +121,12 @@ const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              <Link className="nav-link login-btn" to="/login"><FontAwesomeIcon icon={faRightToBracket} className="nav-icon" /> Login</Link>
+              <Link className="nav-link login-btn" to="/login">
+                <div className="icon-container">
+                  <FontAwesomeIcon icon={faRightToBracket} className="nav-icon" />
+                </div>
+                <span className="nav-text">Login</span>
+              </Link>
             </li>
           </ul>
         </div>
